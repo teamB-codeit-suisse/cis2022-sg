@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 morganBody(app, { noColors: process.env.NODE_ENV === 'production' })
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  if (req.url === '/ping') {
+  if (req.url === '/ping' || req.url === '/') {
     res.status(200).json({ message: 'pong' })
   } else next()
 })
