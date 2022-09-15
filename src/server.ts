@@ -5,7 +5,7 @@ import router from './routes'
 import morganBody from 'morgan-body'
 import { isCelebrateError } from 'celebrate'
 import bodyParser from 'body-parser'
-import { jsonErrorResponse } from './errors'
+import { jsonErrorResponse } from './utils/errors'
 
 dotenv.config()
 
