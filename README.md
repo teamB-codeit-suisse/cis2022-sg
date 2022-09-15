@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-### Dependencies (macOS)
+### Dependencies
 
 You will need `npm` and `node` to install the dependencies.
 
