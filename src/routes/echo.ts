@@ -12,7 +12,6 @@ const echoCelebrate = {
 
 const helloWorld = async (req: Request, res: Response) => {
   const { text } = req.body
-  throw Error('random')
   return res.status(200).json({ text })
 }
 
