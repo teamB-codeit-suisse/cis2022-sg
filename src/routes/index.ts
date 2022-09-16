@@ -6,6 +6,6 @@ import tickerStreamRouter from './tickerStream.route'
 const router = Router()
 router.use('/', echoRouter)
 router.use('/', sumRouter)
-router.use('/problems', tickerStreamRouter)
+router.use(tickerStreamRouter)
 
 export default router
