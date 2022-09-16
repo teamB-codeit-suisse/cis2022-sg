@@ -87,38 +87,38 @@ export function tickerStreamPart2Solution(stream: string[], quantityBlock: numbe
     futureNotional: 0
   }]))
 
-	// array of all output to return
-	const output = [];
-	// stores all tickers that have a tick in current timestamp
-	const affectedTickers = new Set<string>();
+  // array of all output to return
+  const output = [];
+  // stores all tickers that have a tick in current timestamp
+  const affectedTickers = new Set<string>();
 
   const formatTicker = (ticker: string) => {
     const data = tickerData[ticker];
     return `${ticker},${data.quantity.toString()},${data.notional.toFixed(1)}`
   }
-	
-	for (let i = 0; i < ticks.length; i++) {
-		const tick = ticks[i];
-		const data = tickerData[tick.ticker];
 
-		// update the cumulative (and future) quantity and notional
-		if (data.futureQuantity + tick.quantity >= quantityBlock) {
-			data.quantity += data.futureQuantity;
-			data.notional += data.futureNotional;
-			data.futureQuantity = (tick.quantity + data.futureQuantity) % quantityBlock;
-			data.futureNotional = data.futureQuantity * tick.price;
-			data.quantity += (tick.quantity - data.futureQuantity);
-			data.notional += (tick.quantity - data.futureQuantity) * tick.price;
-			// ticker hit quantityBlock this timestamp
-			affectedTickers.add(tick.ticker);
-		} else {
-			data.futureQuantity += tick.quantity;
-			data.futureNotional += tick.quantity * tick.price;
-		}
-		
+  for (let i = 0; i < ticks.length; i++) {
+    const tick = ticks[i];
+    const data = tickerData[tick.ticker];
+
+    // update the cumulative (and future) quantity and notional
+    if (data.futureQuantity + tick.quantity >= quantityBlock) {
+      data.quantity += data.futureQuantity;
+      data.notional += data.futureNotional;
+      data.futureQuantity = (tick.quantity + data.futureQuantity) % quantityBlock;
+      data.futureNotional = data.futureQuantity * tick.price;
+      data.quantity += (tick.quantity - data.futureQuantity);
+      data.notional += (tick.quantity - data.futureQuantity) * tick.price;
+      // ticker hit quantityBlock this timestamp
+      affectedTickers.add(tick.ticker);
+    } else {
+      data.futureQuantity += tick.quantity;
+      data.futureNotional += tick.quantity * tick.price;
+    }
+
     // add new entry if this is last ticker in current timestamp
     if (i === ticks.length - 1 || ticks[i + 1].timestamp !== tick.timestamp) {
-      if (affectedTickers.size === 0)  continue;
+      if (affectedTickers.size === 0) continue;
       // get tickers in alphabetical order
       const tickers = [...affectedTickers].sort((a, b) => a.localeCompare(b));
       // add new entry
@@ -126,7 +126,7 @@ export function tickerStreamPart2Solution(stream: string[], quantityBlock: numbe
       // reset affected tickers
       affectedTickers.clear();
     }
-	}
+  }
 
-	return output;
+  return output;
 }
