@@ -31,6 +31,16 @@ $ npm install
 $ npm run dev
 ```
 
+## Run Tests
+
+```sh
+$ npm run test
+# Run all the tests
+
+$ npm run test -- tests/<filename>
+# Run specific test file
+```
+
 ## Code Tools
 
 ```sh

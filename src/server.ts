@@ -36,6 +36,8 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   }
 })
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`)
 })
+
+export default server
