@@ -13,7 +13,10 @@ const app: Express = express()
 const port = process.env.PORT || 8000
 
 app.use(bodyParser.json())
-morganBody(app, { noColors: process.env.NODE_ENV === 'production' })
+
+if(app.get('env') !== 'test') {
+  morganBody(app, { noColors: process.env.NODE_ENV === 'production' })
+}
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (req.url === '/ping' || req.url === '/') {
@@ -37,7 +40,9 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 })
 
 const server = app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`)
+  if(app.get('env') !== 'test') {
+    console.log(`⚡️[server]: Server is running at https://localhost:${port}`)
+  }
 })
 
 export default server
