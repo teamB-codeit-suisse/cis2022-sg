@@ -9,14 +9,14 @@ export function connect4Solution(battleId: string) {
   let myToken = ''
 
   const postMove = (column: string) => {
-    try {
-      axios.post(playSrc, {
+    axios
+      .post(playSrc, {
         action: 'putToken',
         column,
       })
-    } catch (err) {
-      console.log(err)
-    }
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   type Message = {
