@@ -63,7 +63,7 @@ export function connect4Solution(battleId: string) {
   const req = https.get(evtSrc, (res) => {
     res.on('data', (eventdata) => {
       const text = new TextDecoder('utf-8').decode(eventdata)
-      const data = JSON.parse(text) as Message
+      const data = JSON.parse(text.replace('data: ', '')) as Message
       if (data.hasOwnProperty('youAre')) {
         // initial event
         myToken = data['youAre']
