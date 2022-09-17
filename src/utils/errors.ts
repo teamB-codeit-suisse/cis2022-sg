@@ -20,6 +20,7 @@ export function jsonErrorResponse(error: Error, res: Response): Response {
     return res.status(error.status).json({ message: error.message })
   }
   // For all other errors send 500 with generic message
+  console.log(error)
   return res.status(500).json({
     message: 'Internal Server Error',
   })
