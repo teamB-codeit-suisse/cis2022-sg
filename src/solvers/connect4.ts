@@ -1,5 +1,8 @@
 import axios from 'axios'
 import https from 'https'
+const { Connect4AI } = require('connect4-ai')
+
+const game = new Connect4AI(7, 5)
 
 export async function connect4Solution(battleId: string): Promise<void> {
   const src = `https://cis2022-arena.herokuapp.com/connect4/play/${battleId}`
@@ -9,7 +12,7 @@ export async function connect4Solution(battleId: string): Promise<void> {
     .fill(0)
     .map((_) => Array(7).fill(0))
   const columns = 'ABCDEFG'
-  const addMoveToBoard = (column: string, player: number) => {
+  const addMoveToBoard = (column: string, player: number, done = false) => {
     const c = columns.indexOf(column)
     let placed = false
     for (let i = 5; !placed && i >= 0; i--) {
@@ -17,44 +20,45 @@ export async function connect4Solution(battleId: string): Promise<void> {
       board[i][c] = player
       placed = true
     }
+    if (placed && !done) game.play(c)
     return placed
   }
 
-  const checkLost = () => {
-    for (let i = 0; i < 7; i++) {
-      let cnt = 0
-      for (let j = 0; j < 5; j++) {
-        if (board[j][i] == -1) cnt++
-        else cnt = 0
-        if (cnt == 4) return true
-      }
-    }
-    for (let i = 0; i < 5; i++) {
-      let cnt = 0
-      for (let j = 0; j < 7; j++) {
-        if (board[i][j] == -1) cnt++
-        else cnt = 0
-        if (cnt == 4) return true
-      }
-    }
-    for (let i = 3; i < 5; i++) {
-      for (let j = 3; j < 7; j++) {
-        let cnt = 0
-        for (let k = 0; k < 4; k++) {
-          if (board[i - k][j - k] == -1) cnt++
-        }
-        if (cnt == 4) return true
-      }
-      for (let j = 0; j < 3; j++) {
-        let cnt = 0
-        for (let k = 0; k < 4; k++) {
-          if (board[i - k][j + k] == -1) cnt++
-        }
-        if (cnt == 4) return true
-      }
-    }
-    return false
-  }
+  // const checkLost = () => {
+  //   for (let i = 0; i < 7; i++) {
+  //     let cnt = 0
+  //     for (let j = 0; j < 5; j++) {
+  //       if (board[j][i] == -1) cnt++
+  //       else cnt = 0
+  //       if (cnt == 4) return true
+  //     }
+  //   }
+  //   for (let i = 0; i < 5; i++) {
+  //     let cnt = 0
+  //     for (let j = 0; j < 7; j++) {
+  //       if (board[i][j] == -1) cnt++
+  //       else cnt = 0
+  //       if (cnt == 4) return true
+  //     }
+  //   }
+  //   for (let i = 3; i < 5; i++) {
+  //     for (let j = 3; j < 7; j++) {
+  //       let cnt = 0
+  //       for (let k = 0; k < 4; k++) {
+  //         if (board[i - k][j - k] == -1) cnt++
+  //       }
+  //       if (cnt == 4) return true
+  //     }
+  //     for (let j = 0; j < 3; j++) {
+  //       let cnt = 0
+  //       for (let k = 0; k < 4; k++) {
+  //         if (board[i - k][j + k] == -1) cnt++
+  //       }
+  //       if (cnt == 4) return true
+  //     }
+  //   }
+  //   return false
+  // }
   /*
   const removeFromBoard = (column: string) => {
     const c = columns.indexOf(column)
@@ -101,26 +105,14 @@ export async function connect4Solution(battleId: string): Promise<void> {
                 if (!valid) {
                   if (timeout !== undefined) clearTimeout(timeout)
                   flipTable()
-                } else if (checkLost()) {
-                  if (timeout !== undefined) clearTimeout(timeout)
-                  flipTable()
                 } else {
-                  let done = false
-                  for (let i = 0; i < 100; i++) {
-                    const column = columns[Math.floor(Math.random() * 7)]
-                    if (!addMoveToBoard(column, 1)) continue
-                    postMove(column)
-                    done = true
-                    break
+                  if (game.gameStatus().gameOver) {
+                    if (timeout !== undefined) clearTimeout(timeout)
+                    flipTable()
                   }
-                  if (!done) {
-                    for (const col of columns) {
-                      if (addMoveToBoard(col, 1)) {
-                        postMove(col)
-                        break
-                      }
-                    }
-                  }
+                  const a = game.playAI('hard')
+                  addMoveToBoard(a, 1, true)
+                  postMove(columns.charAt(a))
                 }
               } else {
                 // my move
