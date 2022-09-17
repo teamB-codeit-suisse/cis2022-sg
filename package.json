@@ -7,7 +7,7 @@
     "start": "node build/server.js",
     "dev": "NODE_ENV=development tsc-watch --onSuccess \"node -r dotenv/config ./build/server.js\"",
     "build": "tsc && npm run copy-public",
-    "copy-public":  "cp -r ./src/public/ ./build/public",
+    "copy-public": "cp -r ./src/public/ ./build/public",
     "test": "jest --runInBand",
     "lint-no-fix": "tsc --noEmit && eslint --ext .js,.ts --cache .",
     "lint": "npm run lint-no-fix -- --fix"
@@ -25,9 +25,11 @@
   "dependencies": {
     "body-parser": "^1.20.0",
     "celebrate": "^15.0.1",
+    "collections": "^5.1.13",
     "convict": "^6.2.3",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
+    "json5": "^2.2.1",
     "module-alias": "^2.2.2",
     "morgan-body": "^2.6.8"
   },

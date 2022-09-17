@@ -9,6 +9,7 @@ import swissStigRouter from './swissStig.route'
 import travellingSuisseRobot from './travellingSuisseRobot.route'
 import magicCauldron from './magicCauldrons.route'
 import quordleKeyboard from './quordleKeyboard.route'
+import dnsCache from './dnsCache.route'
 import socialDistancing from './socialDistancing.route'
 
 const router = Router()
@@ -22,6 +23,7 @@ router.use(swissStigRouter)
 router.use(travellingSuisseRobot)
 router.use(magicCauldron)
 router.use(quordleKeyboard)
+router.use(dnsCache)
 router.use(socialDistancing)
 
 export default router
