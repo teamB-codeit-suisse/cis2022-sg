@@ -1,4 +1,5 @@
 import axios from 'axios'
+import EventSource from 'eventsource'
 
 export function connect4Solution(battleId: string) {
   const src = `https://cis2022-arena.herokuapp.com/connect4/start/${battleId}`
