@@ -11,6 +11,7 @@ import magicCauldron from './magicCauldrons.route'
 import quordleKeyboard from './quordleKeyboard.route'
 import dnsCache from './dnsCache.route'
 import socialDistancing from './socialDistancing.route'
+import stonksRouter from './stonks.route'
 
 const router = Router()
 router.use('/', echoRouter)
@@ -25,5 +26,6 @@ router.use(magicCauldron)
 router.use(quordleKeyboard)
 router.use(dnsCache)
 router.use(socialDistancing)
+router.use(stonksRouter)
 
 export default router
