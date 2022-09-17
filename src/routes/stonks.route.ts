@@ -30,13 +30,14 @@ const stonksHandler = async (req: Request, res: Response) => {
   const tests: stonksBody[] = req.body
   const result: string[][] = []
   for (let i = 0; i < tests.length; i++) {
+    const timeline = tests[i].timeline
     const b = new Set()
-    for (const element of Object.values(tests[i])) {
+    for (const element of Object.values(timeline)) {
       for (const stonks of Object.keys(element)) {
         b.add(stonks)
       }
     }
-    result.push([Object.keys(tests[i]).join('|')])
+    result.push([Object.keys(timeline).join('|')])
   }
   return res.status(200).json(result)
 }
