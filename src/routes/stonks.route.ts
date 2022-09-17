@@ -2,6 +2,7 @@
 import { Request, Response, Router } from 'express'
 import { celebrate, Joi, Segments } from 'celebrate'
 import { asyncErrorWrapper } from '../utils/errors'
+import { stonksSolution } from '../solvers/stonks'
 
 const router = Router()
 
@@ -30,19 +31,8 @@ const stonksHandler = async (req: Request, res: Response) => {
   const tests: stonksBody[] = req.body
   const result: string[][] = []
   for (let i = 0; i < tests.length; i++) {
-    const { timeline, energy } = tests[i]
-    const b = new Set()
-    for (const element of Object.values(timeline)) {
-      for (const stonks of Object.keys(element)) {
-        b.add(stonks)
-      }
-    }
-    result.push([
-      energy.toString(),
-      Object.keys(timeline).length.toString(),
-      b.size.toString(),
-      Object.keys(timeline).join('|'),
-    ])
+    const { capital, energy, timeline } = tests[i]
+    result.push(stonksSolution(energy, capital, timeline))
   }
   return res.status(200).json(result)
 }
