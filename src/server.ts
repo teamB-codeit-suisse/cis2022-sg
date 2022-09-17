@@ -13,7 +13,7 @@ const app: Express = express()
 const port = process.env.PORT || 8000
 
 app.use(bodyParser.json())
-app.use(bodyParser.text())
+app.use(bodyParser.text({ limit: 1024000 }))
 
 if (app.get('env') !== 'test') {
   morganBody(app, { noColors: process.env.NODE_ENV === 'production' })
@@ -29,8 +29,6 @@ app.use('/', router)
 
 // Attach error handler for celebrate validation
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  console.log('CAUGHT ERROR')
-  console.log(err)
   if (isCelebrateError(err)) {
     const allMessages: string[] = []
     err.details.forEach((value) => {
