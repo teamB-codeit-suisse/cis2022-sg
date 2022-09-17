@@ -1,144 +1,155 @@
-function rotateFace(matrix: number[][], anticlockwise: boolean) {
-  const result:number[][] = []
+function rotateFace(matrix: number[][], anticlockwise: boolean): number[][] {
+  const result: number[][] = []
   if (anticlockwise) {
-    for(let i = 0; i < matrix[0].length; i++) {
-      let row:number[] = []
-      for(let j = matrix.length-1; j >= 0; j--){
+    for (let i = matrix[0].length - 1; i >= 0; i--) {
+      const row: number[] = []
+      for (let j = 0; j < matrix.length; j++) {
         row.push(matrix[j][i])
       }
       result.push(row)
     }
   } else {
-    for(let i = matrix[0].length-1; i >= 0; i--) {
-      let row:number[] = []
-      for(let j = 0; j < matrix.length; j++){
+    for (let i = 0; i < matrix[0].length; i++) {
+      const row: number[] = []
+      for (let j = matrix.length - 1; j >= 0; j--) {
         row.push(matrix[j][i])
       }
       result.push(row)
     }
   }
-  for(let i = 0; i < matrix.length; i++) {
-    for(let j = 0; j < matrix[i].length; j++){
-      matrix[i][j] = result[i][j];
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      matrix[i][j] = result[i][j]
     }
   }
+  return matrix
 }
 
-function rotateSide(a: number[], b: number[], c: number[], d: number[], anticlockwise: boolean) {
-  const temp = [...a]
-  if (anticlockwise) {
-    for (let i = 0; i < b.length; i++) {
-      a[i] = b[i];
-    }
-    for (let i = 0; i < c.length; i++) {
-      b[i] = c[i];
-    }
-    for (let i = 0; i < d.length; i++) {
-      c[i] = d[i];
-    }
-    for (let i = 0; i < temp.length; i++) {
-      d[i] = temp[i];
-    }
-  } else {
-    for (let i = 0; i < d.length; i++) {
-      a[i] = d[i];
-    }
-    for (let i = 0; i < c.length; i++) {
-      d[i] = c[i];
-    }
-    for (let i = 0; i < b.length; i++) {
-      c[i] = b[i];
-    }
-    for (let i = 0; i < temp.length; i++) {
-      b[i] = temp[i];
-    }
-  }
+function getCol(matrix: number[][], idx: number): number[] {
+  const arr: number[] = []
+  for (let i = 0; i < 3; i++) arr.push(matrix[i][idx])
+  return arr
 }
 
-export function rubiksSolution(ops:String, 
-  u: number[][], 
-  l: number[][], 
-  f: number[][], 
-  r: number[][], 
-  b: number[][], 
-  d: number[][]) {
-    let index = 0
-    while (index < ops.length) {
-      let inverse = false
-      if (index + 1 < ops.length) {
-        if (ops.at(index+1) === 'i') {
-          inverse = true
-        }
+function setCol(matrix: number[][], idx: number, newCol: number[]): number[][] {
+  for (let i = 0; i < 3; i++) matrix[i][idx] = newCol[i]
+  return matrix
+}
+
+export function rubiksSolution(
+  ops: string,
+  u: number[][],
+  l: number[][],
+  f: number[][],
+  r: number[][],
+  b: number[][],
+  d: number[][]
+): {
+  u: number[][]
+  l: number[][]
+  f: number[][]
+  r: number[][]
+  b: number[][]
+  d: number[][]
+} {
+  let index = 0
+  while (index < ops.length) {
+    let inverse = false
+    if (index + 1 < ops.length) {
+      if (ops.at(index + 1) === 'i') {
+        inverse = true
       }
-      switch (ops.at(index)) {
-        case 'U':
-          rotateFace(u, inverse)
-          rotateSide(l[0], b[0], r[0], f[0], inverse)
-          break;
-        case 'L':
-          rotateFace(l, inverse)
-          var u1 = u.map(function(value,_) { return value[0]; });
-          var f1 = f.map(function(value,_) { return value[0]; });
-          var d1 = d.map(function(value,_) { return value[0]; });
-          var b1 = b.map(function(value,_) { return value[0]; });
-          rotateSide(f1, u1, b1, d1, inverse)
-          for (let i = 0; i < u1.length; i++) u[i][0]=u1[i]
-          for (let i = 0; i < f1.length; i++) f[i][0]=f1[i]
-          for (let i = 0; i < d1.length; i++) d[i][0]=d1[i]
-          for (let i = 0; i < b1.length; i++) b[i][0]=b1[i]
-          break;
-        case 'F':
-          rotateFace(f, inverse)
-          var u1 = [...u[2]]
-          var d1 = [...d[0]]
-          var l1 =  l.map(function(value,_) { return value[2]; });
-          var r1 =  l.map(function(value,_) { return value[0]; });
-          rotateSide(u1, r1, d1, l1, inverse)
-          u[2] = u1
-          for (let i = 0; i < l1.length; i++) l[i][2]=l1[i]
-          d[0] = d1
-          for (let i = 0; i < r1.length; i++) r[i][0]=r1[i]
-          break;
-        case 'R':
-          rotateFace(r, inverse)
-          var u1 = u.map(function(value,_) { return value[2]; });
-          var f1 = f.map(function(value,_) { return value[2]; });
-          var d1 = d.map(function(value,_) { return value[2]; });
-          var b1 = b.map(function(value,_) { return value[2]; });
-          rotateSide(f1, d1, b1, u1, inverse)
-          for (let i = 0; i < u1.length; i++) u[i][0]=u1[i]
-          for (let i = 0; i < f1.length; i++) f[i][0]=f1[i]
-          for (let i = 0; i < d1.length; i++) d[i][0]=d1[i]
-          for (let i = 0; i < b1.length; i++) b[i][0]=b1[i]
-          break;
-        case 'B':
-          rotateFace(b, inverse)
-          var u1 = [...u[0]]
-          var d1 = [...d[2]]
-          var l1 =  l.map(function(value,_) { return value[0]; });
-          var r1 =  l.map(function(value,_) { return value[2]; });
-          rotateSide(u1, l1, d1, r1, inverse)
-          u[0] = u1
-          for (let i = 0; i < l1.length; i++) l[i][0]=l1[i]
-          d[2] = d1
-          for (let i = 0; i < r1.length; i++) r[i][2]=r1[i]
-          break;
-        case 'D':
-          rotateFace(d, inverse)
-          rotateSide(l[2], f[2], r[2], b[2], inverse)
-          break;
-      }
+    }
+    const curOps = ops.at(index)
+    if (curOps == 'U') {
+      u = rotateFace(u, inverse)
+      const temp = f[0]
       if (inverse) {
-        index++
+        f[0] = l[0]
+        l[0] = b[0]
+        b[0] = r[0]
+        r[0] = temp
+      } else {
+        f[0] = r[0]
+        r[0] = b[0]
+        b[0] = l[0]
+        l[0] = temp
       }
+    } else if (curOps == 'L') {
+      l = rotateFace(l, inverse)
+      const temp = getCol(f, 0)
+      if (inverse) {
+        f = setCol(f, 0, getCol(d, 0))
+        d = setCol(d, 0, getCol(b, 2).reverse())
+        b = setCol(b, 2, getCol(u, 0).reverse())
+        u = setCol(u, 0, temp)
+      } else {
+        f = setCol(f, 0, getCol(u, 0))
+        u = setCol(u, 0, getCol(b, 2).reverse())
+        b = setCol(b, 2, getCol(d, 0).reverse())
+        d = setCol(d, 0, temp)
+      }
+    } else if (curOps == 'R') {
+      r = rotateFace(r, inverse)
+      const temp = getCol(f, 2)
+      if (!inverse) {
+        f = setCol(f, 2, getCol(d, 2))
+        d = setCol(d, 2, getCol(b, 0).reverse())
+        b = setCol(b, 0, getCol(u, 2).reverse())
+        u = setCol(u, 2, temp)
+      } else {
+        f = setCol(f, 2, getCol(u, 2))
+        u = setCol(u, 2, getCol(b, 0).reverse())
+        b = setCol(b, 0, getCol(d, 2).reverse())
+        d = setCol(d, 2, temp)
+      }
+    } else if (curOps == 'D') {
+      d = rotateFace(d, inverse)
+      const temp = f[2]
+      if (!inverse) {
+        f[2] = l[2]
+        l[2] = b[2]
+        b[2] = r[2]
+        r[2] = temp
+      } else {
+        f[2] = r[2]
+        r[2] = b[2]
+        b[2] = l[2]
+        l[2] = temp
+      }
+    } else if (curOps == 'F') {
+      f = rotateFace(f, inverse)
+      const temp = u[2]
+      if (inverse) {
+        u[2] = getCol(r, 0)
+        r = setCol(r, 0, d[0].reverse())
+        d[0] = getCol(l, 2)
+        l = setCol(l, 2, temp.reverse())
+      } else {
+        u[2] = getCol(l, 2).reverse()
+        l = setCol(l, 2, d[0])
+        d[0] = getCol(r, 0).reverse()
+        r = setCol(r, 0, temp)
+      }
+    } else if (curOps == 'B') {
+      b = rotateFace(b, inverse)
+      const temp = u[0]
+      if (inverse) {
+        u[0] = getCol(l, 0).reverse()
+        l = setCol(l, 0, d[2])
+        d[2] = getCol(r, 2).reverse()
+        r = setCol(r, 2, temp)
+      } else {
+        u[0] = getCol(r, 2)
+        r = setCol(r, 2, d[2].reverse())
+        d[2] = getCol(l, 0)
+        l = setCol(l, 0, temp.reverse())
+      }
+    }
+    if (inverse) {
       index++
     }
-    return {
-      "u" : u,
-      "l" : l,
-      "f" : f,
-      "r" : r,
-      "b" : b,
-      "d" : d,
-    }
+    index++
   }
+  return { u, l, f, r, b, d }
+}
