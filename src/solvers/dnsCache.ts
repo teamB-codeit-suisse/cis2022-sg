@@ -10,7 +10,7 @@ export function query(cacheSize: number, log: string[]) {
   let count: {[key:string]: number}= {};
   let output = [];
   let queue:string[] = [];
- 
+  let index:number = 0;
   for(let i = 0; i < log.length; i++) {
     if (log[i] in lookup) {    
        if (log[i] in count) {
@@ -22,11 +22,11 @@ export function query(cacheSize: number, log: string[]) {
       } else {
         output.push({status: "cache miss", ipaddress: lookup[log[i]]})
         while(Object.keys(count).length >= cacheSize && Object.keys(count).length != 0) {
-          count[queue[0]]--;
-          if (count[queue[0]] === 0) {
-            delete count[queue[0]]
+          count[queue[index]]--;
+          if (count[queue[index]] === 0) {
+            delete count[queue[index]]
           }
-          queue.shift()
+          index++;
         }
       }
       queue.push(log[i])
