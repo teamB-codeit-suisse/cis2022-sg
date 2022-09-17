@@ -89,6 +89,7 @@ function bruteforce(
       }
       let positions1 = new Map<string, number>(positions);
       let path1 = [...path]
+      path1.push("j-", (year + 2037).toString(), (year + 2037+1).toString())
       let res = bruteforce(capital, energy-1, year+1, positions1, bought1, path1, timeline)
       if (res!.capital > best.capital) {
         best.capital = res!.capital;
@@ -103,6 +104,7 @@ function bruteforce(
       }
       let positions1 = new Map<string, number>(positions);
       let path1 = [...path]
+      path1.push("j-", (year + 2037).toString(), (year + 2037-1).toString())
       let res = bruteforce(capital, energy-1, year-1, positions1, bought1, path1, timeline)
       if (res!.capital > best.capital) {
         best.capital = res!.capital;
