@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express'
-import { reverslePart1Solution, reverslePart2Solution } from 'solvers/reversle'
+import { reverslePart1Solution, reverslePart2Solution } from '../solvers/reversle'
 import { asyncErrorWrapper } from '../utils/errors'
 
 const router = Router()
