@@ -30,6 +30,6 @@ const stonksHandler = async (req: Request, res: Response) => {
   return res.status(200).json({ message: 'helloworld' })
 }
 
-router.post('/sum', celebrate(echoCelebrate), asyncErrorWrapper(stonksHandler))
+router.post('/stonks', celebrate(echoCelebrate), asyncErrorWrapper(stonksHandler))
 
 export default router
