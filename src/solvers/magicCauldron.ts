@@ -16,7 +16,7 @@ function simulate(
 ): number {
   let amounts = [amount]
   for (let i = 0; i < row; i++) {
-    for (let j = 0; j <= i; j++) amounts[i] -= cap(i, j)
+    for (let j = 0; j <= i; j++) amounts[j] -= cap(i, j)
     const nextAmounts = Array(i + 2).fill(0)
     for (let j = 0; j <= i; j++) {
       if (amounts[j] <= 0) continue
