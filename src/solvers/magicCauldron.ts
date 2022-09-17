@@ -27,7 +27,7 @@ export function magicCauldronPart2(input: Part2Input) {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
   let lo = 0,
     hi = 999
-  while (hi - lo > 0.2) {
+  while (hi - lo > 0.01) {
     const mid = (lo + hi) / 2
     let amounts = [flow_rate * mid]
     for (let i = 0; i < row_number; i++) {
@@ -65,7 +65,7 @@ export function magicCauldronPart4(input: Part4Input) {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
   let lo = 0,
     hi = 999
-  while (hi - lo > 0.2) {
+  while (hi - lo > 0.01) {
     const mid = (lo + hi) / 2
     let amounts = [flow_rate * mid]
     for (let i = 0; i < row_number; i++) {
