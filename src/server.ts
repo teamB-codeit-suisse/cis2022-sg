@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000
 
 app.use(bodyParser.json())
 
-if(app.get('env') !== 'test') {
+if (app.get('env') !== 'test') {
   morganBody(app, { noColors: process.env.NODE_ENV === 'production' })
 }
 
@@ -40,7 +40,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 })
 
 const server = app.listen(port, () => {
-  if(app.get('env') !== 'test') {
+  if (app.get('env') !== 'test') {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`)
   }
 })
