@@ -19,6 +19,42 @@ export async function connect4Solution(battleId: string): Promise<void> {
     }
     return placed
   }
+
+  const checkLost = () => {
+    for (let i = 0; i < 7; i++) {
+      let cnt = 0
+      for (let j = 0; j < 5; j++) {
+        if (board[j][i] == -1) cnt++
+        else cnt = 0
+        if (cnt == 4) return true
+      }
+    }
+    for (let i = 0; i < 5; i++) {
+      let cnt = 0
+      for (let j = 0; j < 7; j++) {
+        if (board[i][j] == -1) cnt++
+        else cnt = 0
+        if (cnt == 4) return true
+      }
+    }
+    for (let i = 3; i < 5; i++) {
+      for (let j = 3; j < 7; j++) {
+        let cnt = 0
+        for (let k = 0; k < 4; k++) {
+          if (board[i - k][j - k] == -1) cnt++
+        }
+        if (cnt == 4) return true
+      }
+      for (let j = 0; j < 3; j++) {
+        let cnt = 0
+        for (let k = 0; k < 4; k++) {
+          if (board[i - k][j + k] == -1) cnt++
+        }
+        if (cnt == 4) return true
+      }
+    }
+    return false
+  }
   /*
   const removeFromBoard = (column: string) => {
     const c = columns.indexOf(column)
@@ -63,6 +99,9 @@ export async function connect4Solution(battleId: string): Promise<void> {
               if (data.player !== myToken) {
                 const valid = addMoveToBoard(data.column, -1)
                 if (!valid) {
+                  if (timeout !== undefined) clearTimeout(timeout)
+                  flipTable()
+                } else if (checkLost()) {
                   if (timeout !== undefined) clearTimeout(timeout)
                   flipTable()
                 } else {
