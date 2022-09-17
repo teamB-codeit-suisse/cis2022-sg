@@ -27,14 +27,14 @@ export function query(cacheSize: number, log: string[]) {
         queue.push(index1)
       } else {
         output.push({status: "cache miss", ipAddress: lookup.get(log[i])})
-        while(Object.keys(count).length >= cacheSize && Object.keys(count).length != 0) {
+        while(count.size >= cacheSize && count.size != 0) {
           count.set(queue[index], count.get(queue[index])!-1)
           if (count.get(queue[index]) === 0) {
             count.delete(queue[index])
           }
           index++;
         }
-        if (cacheSize > Object.keys(count).length) {
+        if (cacheSize > count.size) {
           count.set(index1, 1);
           queue.push(index1)
         }
