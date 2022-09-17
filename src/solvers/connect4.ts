@@ -33,23 +33,27 @@ export function connect4Solution(battleId: string) {
   let myToken = ''
 
   const postMove = (column: string) => {
-    axios
-      .post(src, {
-        action: 'putToken',
-        column,
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    setTimeout(() => {
+      axios
+        .post(src, {
+          action: 'putToken',
+          column,
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }, 500)
   }
   const flipTable = () => {
-    axios
-      .post(src, {
-        action: '(╯°□°)╯︵ ┻━┻',
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    setTimeout(() => {
+      axios
+        .post(src, {
+          action: '(╯°□°)╯︵ ┻━┻',
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }, 500)
   }
 
   type Message = {
