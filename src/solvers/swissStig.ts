@@ -1,6 +1,6 @@
 export type Question = {
   lower: number,
-  higher: number
+  upper: number
 }
 
 export type InterviewPart1 = {
@@ -32,12 +32,27 @@ export function swissStigPart1Solution (input: InterviewPart1[]) {
   const output : Accuracy[] = [];
   for (let i = 0; i < input.length; i++) {
     const values = new Set([1]);
+    input[i].questions.sort(function(a:Question, b:Question) {
+      return a.upper - b.upper;
+    })
+    const visited:Boolean[] = new Array(input[i].maxRating).fill(true)
     for (let j = 0; j < input[i].questions.length; j++) {
       if (input[i].questions[j].lower >= 1 && input[i].questions[j].lower <= input[i].maxRating) {
         values.add(input[i].questions[j].lower);
       }
-      if (input[i].questions[j].higher + 1 >= 1 && input[i].questions[j].higher + 1 <= input[i].maxRating) {
-        values.add(input[i].questions[j].higher + 1);
+      for(let k = input[i].questions[j].lower; k <= input[i].questions[j].upper; k++) {
+        visited[k-1] = false;
+      }
+      let poss = true;
+      for(let k = 0; k <= input[i].questions[j].upper; k++) {
+        if (visited[k-1]) {
+          poss = false;
+        }
+      }
+      if (poss) {
+        if (input[i].questions[j].upper + 1 >= 1 && input[i].questions[j].upper + 1 <= input[i].maxRating) {
+          values.add(input[i].questions[j].upper+1);
+        }
       }
     }
     let g:number = gcd(values.size, input[i].maxRating);
