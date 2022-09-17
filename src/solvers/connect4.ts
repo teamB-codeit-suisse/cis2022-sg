@@ -55,7 +55,6 @@ async function connect4Solution(battleId: string): Promise<void> {
             } else {
               // someone flip table
               if (timeout !== undefined) clearTimeout(timeout)
-              flipTable()
             }
           } else {
             // end of game
