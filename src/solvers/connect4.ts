@@ -36,7 +36,7 @@ export async function connect4Solution(battleId: string) {
   const play = (payload: unknown): void => {
     timeout = setTimeout(() => {
       axios.post(src, payload).catch(console.error)
-    }, 600)
+    }, 500)
   }
   const postMove = (column: string) => {
     play({ action: 'putToken', column })
@@ -62,10 +62,10 @@ export async function connect4Solution(battleId: string) {
               if (data.player !== myToken) {
                 const valid = addMoveToBoard(data.column, -1)
                 if (!valid) {
-                  if (timeout !== undefined) {
-                    clearTimeout(timeout)
-                  }
+                  if (timeout !== undefined) clearTimeout(timeout)
                   flipTable()
+                  req.end()
+                  resolve()
                 } else {
                   for (let i = 0; i < 100; i++) {
                     const column = columns[Math.floor(Math.random() * 7)]
@@ -80,18 +80,19 @@ export async function connect4Solution(battleId: string) {
               }
             } else {
               // someone flip table
-              // do nothing
+              if (timeout !== undefined) clearTimeout(timeout)
+              req.end()
+              resolve()
             }
           } else {
             console.log(eventdata)
-            if (timeout !== undefined) {
-              clearTimeout(timeout)
-            }
+            if (timeout !== undefined) clearTimeout(timeout)
             req.end()
             resolve()
           }
         } catch (err) {
           console.error(err)
+          if (timeout !== undefined) clearTimeout(timeout)
           flipTable()
         }
       })
