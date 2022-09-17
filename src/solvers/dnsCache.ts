@@ -37,7 +37,9 @@ export function query(cacheSize: number, log: string[]) {
           }
           index++;
         }
-        count.set(index1, 1);
+        if (cacheSize > 0) {
+          count.set(index1, 1);
+        }
       }
       queue.push(index1)
     } else {
