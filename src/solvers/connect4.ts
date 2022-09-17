@@ -94,6 +94,9 @@ export function connect4Solution(battleId: string) {
           }
         } else {
           // someone flip table
+          if (data.player !== myToken) {
+            flipTable()
+          }
           // do nothing
         }
       } else {
