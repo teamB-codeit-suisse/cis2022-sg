@@ -56,11 +56,19 @@ async function connect4Solution(battleId: string): Promise<void> {
               } else {
                 // my move
                 // do nothing
+                if (columns.indexOf(data.column) !== game.plays[game.plays.length - 1]) {
+                  if (timeout !== undefined) clearTimeout(timeout)
+                  flipTable()
+                }
               }
             } else {
               // someone flip table
-              if (timeout !== undefined) clearTimeout(timeout)
-              flipTable()
+              if (data.player !== myToken) {
+                if (timeout !== undefined) clearTimeout(timeout)
+                flipTable()
+              }
+              req.end()
+              resolve()
             }
           } else {
             // end of game
