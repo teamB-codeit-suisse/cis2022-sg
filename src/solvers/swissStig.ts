@@ -37,12 +37,12 @@ export function swissStigPart1Solution (input: InterviewPart1[]) {
     })
     const visited:Boolean[] = new Array(input[i].maxRating).fill(true)
     for (let j = 0; j < input[i].questions.length; j++) {
-      if (input[i].questions[j].lower >= 1 && input[i].questions[j].lower <= input[i].maxRating) {
-        values.add(input[i].questions[j].lower);
-      }
+      values.add(input[i].questions[j].lower);
       for(let k = input[i].questions[j].lower; k <= input[i].questions[j].upper; k++) {
         visited[k-1] = false;
       }
+    }
+    for (let j = 0; j < input[i].questions.length; j++) {
       let poss = true;
       for(let k = 0; k <= input[i].questions[j].upper; k++) {
         if (visited[k-1]) {
@@ -55,6 +55,7 @@ export function swissStigPart1Solution (input: InterviewPart1[]) {
         }
       }
     }
+    
     let g:number = gcd(values.size, input[i].maxRating);
     output.push({p: values.size/g, q : input[i].maxRating/g})
   }
