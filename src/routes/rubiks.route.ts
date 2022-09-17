@@ -7,7 +7,7 @@ const router = Router()
 
 const rubiksCelebrate = {
   [Segments.BODY]: Joi.object({
-    ops: Joi.string(),
+    ops: Joi.string().allow(''),
     state: Joi.object({
       u: Joi.array().items(
         Joi.array().items(
@@ -56,7 +56,7 @@ const rubiks = async (req: Request, res: Response) => {
   console.log(state)
   const { u, l, f, r, b, d }: stateObject = state
   const output = rubiksSolution(ops, u, l, f, r, b, d)
-  return res.status(200).json({ output })
+  return res.status(200).json(output)
 }
 
 router.post(
