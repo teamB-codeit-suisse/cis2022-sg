@@ -8,6 +8,7 @@ async function connect4Solution(battleId: string): Promise<void> {
 
   const columns = 'ABCDEFG'
   const game = new (Connect4.Connect4AI as any)()
+  game.recursiveDepthLimit = 5
 
   let myToken = ''
 
@@ -15,7 +16,7 @@ async function connect4Solution(battleId: string): Promise<void> {
   const play = (payload: unknown): void => {
     timeout = setTimeout(async () => {
       await axios.post(src, payload).catch(console.error)
-    }, 125)
+    }, 150)
   }
   const postMove = (column: string) => {
     play({ action: 'putToken', column })
