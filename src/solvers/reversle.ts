@@ -70,8 +70,14 @@ export function reverslePart2Solution(
         if (c === '+') stack.push(x + y)
         if (c === '-') stack.push(x - y)
         if (c === '*') stack.push(x * y)
-        if (c === '/') stack.push(x / y)
-        if (c === '\\') stack.push(y / x)
+        if (c === '/') {
+          if (y === 0) return false
+          stack.push(x / y)
+        }
+        if (c === '\\') {
+          if (x === 0) return false
+          stack.push(y / x)
+        }
         if (c === '^') stack.push(x ** y)
       }
     }
