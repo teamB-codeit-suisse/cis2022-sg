@@ -81,6 +81,12 @@ export function reverslePart2Solution(
     return left === right
   }
 
+  function shuffle(array: string[]) {
+    return array
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value)
+  }
   const generate = (index: number, currentEquation: string, hitEquals: boolean): string | null => {
     if (index === equationLength) {
       if (!hitEquals) return null
@@ -88,7 +94,7 @@ export function reverslePart2Solution(
       return currentEquation
     }
     if (index === equationLength - 1 && !hitEquals) return null
-    for (const candidate of constraints[index].values()) {
+    for (const candidate of shuffle(Array.from(constraints[index]))) {
       if (hitEquals && candidate === '=') continue
       if (hitEquals && CONSTRAINTS.operators.includes(candidate)) continue
       if (candidate === '=') {
