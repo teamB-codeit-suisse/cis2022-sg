@@ -9,10 +9,14 @@ export function connect4Solution(battleId: string) {
   let myToken = ''
 
   const postMove = (column: string) => {
-    axios.post(playSrc, {
-      action: 'putToken',
-      column,
-    })
+    try {
+      axios.post(playSrc, {
+        action: 'putToken',
+        column,
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   type Message = {
@@ -25,17 +29,16 @@ export function connect4Solution(battleId: string) {
   }
   let count = 0
   evtSource.onmessage = (event: MessageEvent<string>) => {
-    console.log('New event')
     console.log(event)
     count++
-    if (count > 50) evtSource.close()
+    if (count > 100) evtSource.close()
 
     const data = JSON.parse(event.data) as Message
     if (data.hasOwnProperty('youAre')) {
       // initial event
       myToken = data['youAre']
       if (myToken === '🔴') {
-        postMove('A')
+        postMove('D')
       }
     } else if (data.hasOwnProperty('player')) {
       if (data.action === 'putToken') {
@@ -47,9 +50,6 @@ export function connect4Solution(battleId: string) {
         }
       }
     } else {
-      console.log(
-        data.winner === myToken ? 'I won!' : data.winner === 'draw' ? 'draw' : 'I lost ):'
-      )
       evtSource.close()
     }
   }
