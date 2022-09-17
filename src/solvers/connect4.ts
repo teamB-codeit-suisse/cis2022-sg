@@ -36,7 +36,7 @@ export async function connect4Solution(battleId: string) {
   const play = (payload: unknown): void => {
     timeout = setTimeout(() => {
       axios.post(src, payload).catch(console.error)
-    }, 500)
+    }, 600)
   }
   const postMove = (column: string) => {
     play({ action: 'putToken', column })
@@ -80,15 +80,13 @@ export async function connect4Solution(battleId: string) {
               }
             } else {
               // someone flip table
-              if (data.player !== myToken) {
-                flipTable()
-                req.end()
-                resolve()
-              }
               // do nothing
             }
           } else {
             console.log(eventdata)
+            if (timeout !== undefined) {
+              clearTimeout(timeout)
+            }
             req.end()
             resolve()
           }
