@@ -25,9 +25,7 @@ export function query(cacheSize: number, log: string[]) {
       if (count.get(index1)) {
         output.push({status: "cache hit", ipAddress: lookup.get(log[i])})
         count.set(index1, count.get(index1)!+1);
-      } else if (Object.keys(count).length < cacheSize) {
-        output.push({status: "cache miss", ipAddress: lookup.get(log[i])})
-        count.set(index1, 1);
+        queue.push(index1)
       } else {
         output.push({status: "cache miss", ipAddress: lookup.get(log[i])})
         while(Object.keys(count).length >= cacheSize && Object.keys(count).length != 0) {
@@ -37,11 +35,11 @@ export function query(cacheSize: number, log: string[]) {
           }
           index++;
         }
-        if (cacheSize > 0) {
+        if (cacheSize > Object.keys(count).length) {
           count.set(index1, 1);
+          queue.push(index1)
         }
       }
-      queue.push(index1)
     } else {
       output.push({status: "invalid", ipAddress: null})
     }
