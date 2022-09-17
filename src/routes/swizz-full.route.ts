@@ -10,8 +10,8 @@ const echoCelebrate = {
       questions: Joi.array()
         .items(
           Joi.object({
-            lower: Joi.number(),
-            higher: Joi.number(),
+            from: Joi.number(),
+            to: Joi.number(),
           })
         )
         .required(),
@@ -22,8 +22,8 @@ const echoCelebrate = {
 }
 
 type questions = {
-  lower: number
-  higher: number
+  from: number
+  to: number
 }
 
 type Testcase = {
@@ -53,15 +53,15 @@ const sum = async (req: Request, res: Response) => {
     let cnt = 0
     const offset = lucky || 0
     for (const question of questions) {
-      let { lower, higher } = question
-      lower += p * offset
-      lower %= maxRating - 1
-      lower += 1
-      higher += p * offset
-      higher %= maxRating - 1
-      higher += 1
+      let { from, to } = question
+      from += p * offset
+      from %= maxRating - 1
+      from += 1
+      to += p * offset
+      to %= maxRating - 1
+      to += 1
       let cur = 0
-      if (higher >= lower) cur = higher - lower + 1
+      if (to >= from) cur = to - from + 1
       p *= cnt
       cnt += 1
       p += cur
