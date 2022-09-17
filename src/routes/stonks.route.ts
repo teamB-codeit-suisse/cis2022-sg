@@ -32,7 +32,8 @@ const stonksHandler = async (req: Request, res: Response) => {
   const result: string[][] = []
   for (let i = 0; i < tests.length; i++) {
     const { capital, energy, timeline } = tests[i]
-    console.log(`Testcase ${i} - ${capital} | ${energy}`)
+    console.log(`Testcase ${i} - ${capital} | ${energy} | `)
+    console.log(timeline)
     result.push(stonksSolution(energy, capital, timeline))
   }
   return res.status(200).json(result)
