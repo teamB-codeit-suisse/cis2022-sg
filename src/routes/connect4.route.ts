@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express'
-import { connect4Solution } from 'solvers/connect4'
+import { connect4Solution } from '../solvers/connect4'
 import { asyncErrorWrapper } from '../utils/errors'
 
 const router = Router()
