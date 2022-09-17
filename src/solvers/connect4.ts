@@ -15,9 +15,9 @@ async function connect4Solution(battleId: string): Promise<void> {
   const play = (payload: unknown): void => {
     timeout = setTimeout(async () => {
       await axios.post(src, payload).catch(console.error)
-    }, 150)
+    }, 125)
   }
-  const postMove = (column) => {
+  const postMove = (column: string) => {
     play({ action: 'putToken', column })
   }
   const flipTable = () => {
@@ -35,7 +35,7 @@ async function connect4Solution(battleId: string): Promise<void> {
             // initial event
             myToken = data['youAre']
             if (myToken === '🔴') {
-              game.playAI('easy')
+              game.playAI('hard')
               postMove(columns[game.plays[game.plays.length - 1]])
             }
           } else if (action) {
@@ -51,7 +51,7 @@ async function connect4Solution(battleId: string): Promise<void> {
                     if (timeout !== undefined) clearTimeout(timeout)
                     flipTable()
                   } else {
-                    game.playAI('easy')
+                    game.playAI('hard')
                     postMove(columns[game.plays[game.plays.length - 1]])
                   }
                   const a = game.playAI('hard')
