@@ -73,15 +73,24 @@ export function rubiksSolution(ops:String,
       switch (ops.at(index)) {
         case 'U':
           rotateFace(u, inverse)
-          rotateSide(l[0], b[0], r[0], f[0], inverse)
+          l1 = [...l[0]].reverse()
+          b1 = [...b[0]]
+          r1 = [...r[0]]
+          f1 = [...f[0]]
+          rotateSide(l1, b1, r1, f1, inverse)
+          l[0] = l1.reverse()
+          b[0] = b1
+          r[0] = r1
+          f[0] = f1
           break;
         case 'L':
           rotateFace(l, inverse)
           var u1 = u.map(function(value,_) { return value[0]; });
           var f1 = f.map(function(value,_) { return value[0]; });
           var d1 = d.map(function(value,_) { return value[0]; });
-          var b1 = b.map(function(value,_) { return value[0]; });
+          var b1 = b.map(function(value,_) { return value[0]; }).reverse();
           rotateSide(f1, d1, b1, u1, inverse)
+          b1 = b1.reverse()
           for (let i = 0; i < u1.length; i++) u[i][0]=u1[i]
           for (let i = 0; i < f1.length; i++) f[i][0]=f1[i]
           for (let i = 0; i < d1.length; i++) d[i][0]=d1[i]
@@ -90,22 +99,26 @@ export function rubiksSolution(ops:String,
         case 'F':
           rotateFace(f, inverse)
           var u1 = [...u[2]]
-          var d1 = [...d[0]]
-          var l1 =  l.map(function(value,_) { return value[2]; });
+          var d1 = [...d[0]].reverse()
+          var l1 =  l.map(function(value,_) { return value[2]; }).reverse();
           var r1 =  r.map(function(value,_) { return value[0]; });
           rotateSide(u1, r1, d1, l1, inverse)
+          l1 = l1.reverse()
           u[2] = u1
           for (let i = 0; i < l1.length; i++) l[i][2]=l1[i]
-          d[0] = d1
+          d[0] = d1.reverse()
           for (let i = 0; i < r1.length; i++) r[i][0]=r1[i]
           break;
         case 'R':
           rotateFace(r, inverse)
-          var u1 = u.map(function(value,_) { return value[2]; });
-          var f1 = f.map(function(value,_) { return value[2]; });
+          var u1 = u.map(function(value,_) { return value[2]; }).reverse();
+          var f1 = f.map(function(value,_) { return value[2]; }).reverse();
           var d1 = d.map(function(value,_) { return value[2]; });
-          var b1 = b.map(function(value,_) { return value[2]; });
+          var b1 = b.map(function(value,_) { return value[2]; }).reverse();
           rotateSide(f1, u1, b1, d1, inverse)
+          u1 = u1.reverse()
+          f1 = f1.reverse()
+          b1 = b1.reverse()
           for (let i = 0; i < u1.length; i++) u[i][2]=u1[i]
           for (let i = 0; i < f1.length; i++) f[i][2]=f1[i]
           for (let i = 0; i < d1.length; i++) d[i][2]=d1[i]
@@ -113,11 +126,13 @@ export function rubiksSolution(ops:String,
           break;
         case 'B':
           rotateFace(b, inverse)
-          var u1 = [...u[0]]
+          var u1 = [...u[0]].reverse()
           var d1 = [...d[2]]
           var l1 =  l.map(function(value,_) { return value[0]; });
-          var r1 =  r.map(function(value,_) { return value[2]; });
+          var r1 =  r.map(function(value,_) { return value[2]; }).reverse();
           rotateSide(u1, l1, d1, r1, inverse)
+          u1 = u1.reverse()
+          r1 = r1.reverse()
           u[0] = u1
           for (let i = 0; i < l1.length; i++) l[i][0]=l1[i]
           d[2] = d1
