@@ -65,7 +65,10 @@ async function connect4Solution(battleId: string): Promise<void> {
           } else {
             // end of game
             console.log(data)
-            if (timeout !== undefined) clearTimeout(timeout)
+            if (data.player !== myToken) {
+              if (timeout !== undefined) clearTimeout(timeout)
+              flipTable()
+            }
             req.end()
             resolve()
           }
