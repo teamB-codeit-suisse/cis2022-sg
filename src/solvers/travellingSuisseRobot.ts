@@ -62,7 +62,12 @@ export function travellingSuisseRobotSolution(mapString: string): string {
     }
   }
 
-  const { instructions } = solve(0, initialRobotPosition, letterPositions)
-  console.log(instructions)
-  return instructions
+  try {
+    const { instructions } = solve(0, initialRobotPosition, letterPositions)
+    return instructions
+  } catch (err) {
+    console.log('CAUGHT ERROR')
+    console.log(err)
+    return 'S'
+  }
 }
