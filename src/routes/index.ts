@@ -10,6 +10,7 @@ import travellingSuisseRobot from './travellingSuisseRobot.route'
 import magicCauldron from './magicCauldrons.route'
 import quordleKeyboard from './quordleKeyboard.route'
 import socialDistancing from './socialDistancing.route'
+import connect4 from './connect4.route'
 
 const router = Router()
 router.use('/', echoRouter)
@@ -23,5 +24,6 @@ router.use(travellingSuisseRobot)
 router.use(magicCauldron)
 router.use(quordleKeyboard)
 router.use(socialDistancing)
+router.use(connect4)
 
 export default router

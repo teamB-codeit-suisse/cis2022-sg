@@ -7,7 +7,7 @@
     "start": "node build/server.js",
     "dev": "NODE_ENV=development tsc-watch --onSuccess \"node -r dotenv/config ./build/server.js\"",
     "build": "tsc && npm run copy-public",
-    "copy-public":  "cp -r ./src/public/ ./build/public",
+    "copy-public": "cp -r ./src/public/ ./build/public",
     "test": "jest --runInBand",
     "lint-no-fix": "tsc --noEmit && eslint --ext .js,.ts --cache .",
     "lint": "npm run lint-no-fix -- --fix"
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/huajun07/cis2022-sg#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "celebrate": "^15.0.1",
     "convict": "^6.2.3",
