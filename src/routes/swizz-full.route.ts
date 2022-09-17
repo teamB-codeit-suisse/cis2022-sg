@@ -5,18 +5,20 @@ import { asyncErrorWrapper } from '../utils/errors'
 const router = Router()
 
 const echoCelebrate = {
-  [Segments.BODY]: Joi.object({
-    questions: Joi.array()
-      .items(
-        Joi.object({
-          lower: Joi.number().required(),
-          higher: Joi.number().required(),
-        })
-      )
-      .required(),
-    maxRating: Joi.number().required(),
-    lucky: Joi.number(),
-  }),
+  [Segments.BODY]: Joi.array().items(
+    Joi.object({
+      questions: Joi.array()
+        .items(
+          Joi.object({
+            lower: Joi.number().required(),
+            higher: Joi.number().required(),
+          })
+        )
+        .required(),
+      maxRating: Joi.number().required(),
+      lucky: Joi.number(),
+    })
+  ),
 }
 
 type questions = {
