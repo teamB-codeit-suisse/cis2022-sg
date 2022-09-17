@@ -21,7 +21,13 @@ export function connect4Solution(battleId: string) {
     column: string
     winner: string
   }
+  let count = 0
   evtSource.onmessage = (event: MessageEvent<Message>) => {
+    console.log('New event')
+    console.log(event)
+    count++
+    if (count > 50) evtSource.close()
+
     const data = event.data
     if (data.hasOwnProperty('youAre')) {
       // initial event
@@ -32,7 +38,7 @@ export function connect4Solution(battleId: string) {
     } else if (data.hasOwnProperty('player')) {
       if (data.action === 'putToken') {
         if (data.player !== myToken) {
-          postMove('B')
+          postMove('ABCDEFG'[Math.floor(Math.random() * 7)])
         } else {
           // someone flip table
           /* do nothing */
