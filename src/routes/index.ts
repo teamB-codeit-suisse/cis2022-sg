@@ -8,6 +8,7 @@ import rubiksRouter from './rubiks.route'
 import travellingSuisseRobot from './travellingSuisseRobot.route'
 import magicCauldron from './magicCauldrons.route'
 import quordleKeyboard from './quordleKeyboard.route'
+import socialDistancing from './socialDistancing.route'
 
 const router = Router()
 router.use('/', echoRouter)
@@ -19,5 +20,6 @@ router.use(rubiksRouter)
 router.use(travellingSuisseRobot)
 router.use(magicCauldron)
 router.use(quordleKeyboard)
+router.use(socialDistancing)
 
 export default router
