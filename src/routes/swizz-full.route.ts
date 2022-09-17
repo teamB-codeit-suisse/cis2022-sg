@@ -15,8 +15,8 @@ const echoCelebrate = {
 }
 
 type questions = {
-  from: number
-  to: number
+  lower: number
+  upper: number
 }
 
 type Testcase = {
@@ -47,16 +47,16 @@ const sum = async (req: Request, res: Response) => {
     let sum = 0
     const offset = lucky || 0
     for (const question of questions) {
-      let { from, to } = question
-      from += p * offset
-      from %= maxRating - 1
-      from += 1
-      to += p * offset
-      to %= maxRating - 1
-      to += 1
-      //   console.log(from)
-      //   console.log(to)
-      if (to >= from) sum += to - from + 1
+      let { lower, upper } = question
+      lower += p * offset
+      lower %= maxRating - 1
+      lower += 1
+      upper += p * offset
+      upper %= maxRating - 1
+      upper += 1
+      //   console.log(lower)
+      //   console.log(upper)
+      if (upper >= lower) sum += upper - lower + 1
       p = sum
       cnt += 1
       q = cnt * maxRating
