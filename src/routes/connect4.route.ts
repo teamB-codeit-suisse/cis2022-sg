@@ -1,7 +1,6 @@
 import { Request, Response, Router } from 'express'
 import { asyncErrorWrapper } from '../utils/errors'
 import workerFarm from 'worker-farm'
-
 const workers = workerFarm(require.resolve('../solvers/connect4'))
 
 const router = Router()
@@ -13,7 +12,9 @@ type Connect4Body = {
 const connect4 = async (req: Request, res: Response) => {
   const { battleId }: Connect4Body = req.body
   res.status(200).send()
-  workers(battleId, () => {})
+  workers(battleId, (...args: any[]) => {
+    console.log('done', args)
+  })
 }
 
 router.post('/connect4', asyncErrorWrapper(connect4))
