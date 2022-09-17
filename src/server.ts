@@ -40,6 +40,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     })
     res.status(422).json({ message: allMessages.join('\n') })
   } else {
+    console.log(err)
     jsonErrorResponse(err, res)
   }
 })
