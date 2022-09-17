@@ -95,8 +95,9 @@ export async function connect4Solution(battleId: string): Promise<void> {
             // initial event
             myToken = data['youAre']
             if (myToken === '🔴') {
-              addMoveToBoard('D', 1)
-              postMove('D')
+              const a = game.playAI('hard')
+              addMoveToBoard(columns.charAt(a), 1, true)
+              postMove(columns.charAt(a))
             }
           } else if (action) {
             if (data.action === 'putToken') {
@@ -111,7 +112,7 @@ export async function connect4Solution(battleId: string): Promise<void> {
                     flipTable()
                   }
                   const a = game.playAI('hard')
-                  addMoveToBoard(a, 1, true)
+                  addMoveToBoard(columns.charAt(a), 1, true)
                   postMove(columns.charAt(a))
                 }
               } else {
