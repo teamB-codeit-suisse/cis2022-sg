@@ -27,12 +27,12 @@ function rotateFace(matrix: number[][], anticlockwise: boolean): number[][] {
 
 function getCol(matrix: number[][], idx: number): number[] {
   const arr: number[] = []
-  for (let i = 0; i < 3; i++) arr.push(matrix[idx][i])
+  for (let i = 0; i < 3; i++) arr.push(matrix[i][idx])
   return arr
 }
 
 function setCol(matrix: number[][], idx: number, newCol: number[]): number[][] {
-  for (let i = 0; i < 3; i++) matrix[idx][i] = newCol[i]
+  for (let i = 0; i < 3; i++) matrix[i][idx] = newCol[i]
   return matrix
 }
 
