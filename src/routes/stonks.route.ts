@@ -28,11 +28,16 @@ type stonksBody = {
 
 const stonksHandler = async (req: Request, res: Response) => {
   const tests: stonksBody[] = req.body
-  let a = 0
   const result: string[][] = []
   for (let i = 0; i < tests.length; i++) {
-    a = Math.max(a, Object.keys(tests[i]).length)
-    result.push([a.toString()])
+    const b = new Set()
+    const a = Object.keys(tests[i]).length
+    for (const element of Object.values(tests[i])) {
+      for (const stonks of Object.keys(element)) {
+        b.add(stonks)
+      }
+    }
+    result.push([a.toString(), b.toString()])
   }
   return res.status(200).json(result)
 }
