@@ -1,37 +1,39 @@
-export type Lookup = {[key:string]: string};
-let compression: {[key:string]: number} = {}
-let lookup:Lookup = {}
+export type Lookup = Map<string, string>
+let compression:Map<string, number>
+let lookup:Lookup
 
 export function setLookUp(table: Lookup) {
-  lookup = table;
-  compression = {};
+  lookup = new Map<string, string>()
+  compression = new Map<string, number>()
   let index = 0;
-  for (const [key, _] of Object.entries(lookup)) {
-    compression[key] = index;
+  for (const [key, value] of Object.entries(table)) {
+    lookup.set(key, value)
+    compression.set(key, index);
     index++
+
   }
 }
 
 export function query(cacheSize: number, log: string[]) {
-  let count: {[key:number]: number}= {};
+  let count:Map<number, number> = new Map<number, number>()
   let output = [];
   let queue:number[] = [];
   let index:number = 0;
   for(let i = 0; i < log.length; i++) {
-    if (log[i] in lookup) {
-      let index1 = compression[log[i]]
-      if (index1 in count) {
-        output.push({status: "cache hit", ipaddress: lookup[log[i]]})
-        count[index1]++;
+    if (lookup.get(log[i]) != undefined) {
+      let index1 = compression.get(log[i])!
+      if (count.get(index1)) {
+        output.push({status: "cache hit", ipaddress: lookup.get(log[i])})
+        count.set(index1, count.get(index1)!+1);
       } else if (Object.keys(count).length < cacheSize) {
-        output.push({status: "cache miss", ipaddress: lookup[log[i]]})
-        count[index1] = 1;
+        output.push({status: "cache miss", ipaddress: lookup.get(log[i])})
+        count.set(index1, 1);
       } else {
-        output.push({status: "cache miss", ipaddress: lookup[log[i]]})
+        output.push({status: "cache miss", ipaddress: lookup.get(log[i])})
         while(Object.keys(count).length >= cacheSize && Object.keys(count).length != 0) {
-          count[queue[index]]--;
-          if (count[queue[index]] === 0) {
-            delete count[queue[index]]
+          count.set(queue[index], count.get(queue[index])!-1)
+          if (count.get(queue[index]) === 0) {
+            count.delete(queue[index])
           }
           index++;
         }
