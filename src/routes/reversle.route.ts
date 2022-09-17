@@ -27,7 +27,7 @@ const reversle = async (req: Request, res: Response) => {
   console.log('GIVEN INPUT')
   console.log(req.body)
   const equation: string[] = ['0', '=']
-  for (let i = 2; i < equationLength; i++) equation.push('=')
+  for (let i = 2; i < equationLength; i++) equation.push('0')
   return res.status(200).json({ equation })
 }
 
