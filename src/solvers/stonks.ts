@@ -17,6 +17,9 @@ export type Testcase = {
   timeline: Timeline
 }
 
+const dp:Set<string> = new Set<string>();
+
+
 function bruteforce(
   capital:number, 
   energy:number, 
@@ -25,6 +28,7 @@ function bruteforce(
   bought:Map<number, Map<string, number>>,
   path:string[],
   timeline:Timeline) {
+
     let year_string:string = (year + 2037).toString()
     if (energy === 0) {
       if (year === 0) {
@@ -43,23 +47,45 @@ function bruteforce(
       }
     }
 
+    let hash:number[] = [capital, energy, year];
+    for (const [_, value] of bought.get(0)!.entries()) {
+      hash.push(value)
+    }
+    for (const [_, value] of bought.get(-1)!.entries()) {
+      hash.push(value)
+    }
+    for (const [_, value] of bought.get(-2)!.entries()) {
+      hash.push(value)
+    }
+    for (const [_, value] of positions.entries()) {
+      hash.push(value)
+    }
+    const hash_string = JSON.stringify(hash)
+
+    if (dp.has(hash_string)) {
+      console.log(hash_string)
+      return {profit: 0, path: [""]}
+    }
+
+
     let best = {profit: 0, path: [""]}
 
     let stocks:Stocks = timeline[year_string as keyof Timeline]
     for (const name in stocks) {
-      let cur:number = bought.get(year)!.get(name)!
-      if (cur < stocks[name].qty) {
+      if (bought.get(year)!.get(name)! < stocks[name].qty) {
         if (capital >= stocks[name].price) {
           let bought1 = new Map<number, Map<string, number>>();
-          for (const [key, value] of bought.entries()) {
-            bought1.set(key, value);
-          }
+          bought1.set(0, new  Map<string, number>(bought.get(0)!));
+          bought1.set(-1, new  Map<string, number>(bought.get(-1)!));
+          bought1.set(-2, new  Map<string, number>(bought.get(-2)!));
+
           let positions1 = new Map<string, number>(positions);
           let path1 = []
           for (const s of path) {
             path1.push(s)
           }
-          bought1.get(year)!.set(name, cur+1)
+
+          bought1.get(year)!.set(name, bought.get(year)!.get(name)!+1)
           positions1.set(name, positions.get(name)!+1)
           path1.push("b-" + name + "-1");
           let res = bruteforce(capital-stocks[name].price, energy, year, positions1, bought1, path1, timeline)
@@ -69,31 +95,31 @@ function bruteforce(
           }
         }
       }
-      if (positions.get(name)! > 0) {
-        let bought1 = new Map<number, Map<string, number>>();
-        for (const [key, value] of bought.entries()) {
-          bought1.set(key, value);
-        }
-        let positions1 = new Map<string, number>(positions);
-        let path1 = []
-        for (const s of path) {
-          path1.push(s)
-        }
-        positions1.set(name, positions.get(name)!-1)
-        path1.push("s-" + name + "-1");
-        let res = bruteforce(capital+stocks[name].price, energy, year, positions1, bought1, path1, timeline)
-        if (res!.profit > best.profit) {
-          best.profit = res!.profit;
-          best.path = res!.path;
-        }
-      }
+      // if (positions.get(name)! > 0) {
+      //   let bought1 = new Map<number, Map<string, number>>();
+      //   bought1.set(0, new  Map<string, number>(bought.get(0)!));
+      //   bought1.set(-1, new  Map<string, number>(bought.get(-1)!));
+      //   bought1.set(-2, new  Map<string, number>(bought.get(-2)!));
+      //   let positions1 = new Map<string, number>(positions);
+      //   let path1 = []
+      //   for (const s of path) {
+      //     path1.push(s)
+      //   }
+      //   positions1.set(name, positions.get(name)!-1)
+      //   path1.push("s-" + name + "-1");
+      //   let res = bruteforce(capital+stocks[name].price, energy, year, positions1, bought1, path1, timeline)
+      //   if (res!.profit > best.profit) {
+      //     best.profit = res!.profit;
+      //     best.path = res!.path;
+      //   }
+      // }
     }
 
     if (year != 0) {
       let bought1 = new Map<number, Map<string, number>>();
-      for (const [key, value] of bought.entries()) {
-        bought1.set(key, value);
-      }
+      bought1.set(0, new  Map<string, number>(bought.get(0)!));
+      bought1.set(-1, new  Map<string, number>(bought.get(-1)!));
+      bought1.set(-2, new  Map<string, number>(bought.get(-2)!));
       let positions1 = new Map<string, number>(positions);
       let path1 = []
       for (const s of path) {
@@ -109,9 +135,9 @@ function bruteforce(
 
     if (year != -2) {
       let bought1 = new Map<number, Map<string, number>>();
-      for (const [key, value] of bought.entries()) {
-        bought1.set(key, value);
-      }
+      bought1.set(0, new  Map<string, number>(bought.get(0)!));
+      bought1.set(-1, new  Map<string, number>(bought.get(-1)!));
+      bought1.set(-2, new  Map<string, number>(bought.get(-2)!));
       let positions1 = new Map<string, number>(positions);
       let path1 = []
       for (const s of path) {
@@ -128,6 +154,7 @@ function bruteforce(
 }
 
 function hardcode34(testcase:Testcase, stock_names:Set<string>) {
+  dp.clear();
   const { energy, capital, timeline } = testcase;
   let positions = new Map<string, number>()
   let bought = new Map<number, Map<string, number>>()
@@ -160,7 +187,7 @@ export function getStonks(input: Array<Testcase>) {
     }
     console.log(s.size, t.size, energy, capital)
     
-    if (s.size<= 2 && t.size <= 3 && energy <= 4) {
+    if (t.size <= 3 && energy <= 4) {
       output.push(hardcode34(input[i], s))
     } else {
       output.push([])
