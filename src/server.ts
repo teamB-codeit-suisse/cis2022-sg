@@ -29,6 +29,8 @@ app.use('/', router)
 
 // Attach error handler for celebrate validation
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.log('CAUGHT ERROR')
+  console.log(err)
   if (isCelebrateError(err)) {
     const allMessages: string[] = []
     err.details.forEach((value) => {
