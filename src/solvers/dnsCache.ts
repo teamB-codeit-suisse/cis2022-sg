@@ -10,7 +10,7 @@ export function query(cacheSize: number, log: string[]) {
   let count: {[key:string]: number}= {};
   let output = [];
   let queue:string[] = [];
-
+ 
   for(let i = 0; i < log.length; i++) {
     if (log[i] in lookup) {    
        if (log[i] in count) {
