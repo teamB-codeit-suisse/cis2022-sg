@@ -7,6 +7,7 @@ const router = Router()
 
 const instantiateDNSLookupCelebrate = {
   [Segments.BODY]: Joi.object({
+    testId: Joi.number(),
     lookupTable:  Joi.object()
   })
 }
