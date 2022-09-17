@@ -64,8 +64,6 @@ export async function connect4Solution(battleId: string) {
                 if (!valid) {
                   if (timeout !== undefined) clearTimeout(timeout)
                   flipTable()
-                  req.end()
-                  resolve()
                 } else {
                   for (let i = 0; i < 100; i++) {
                     const column = columns[Math.floor(Math.random() * 7)]
@@ -81,11 +79,10 @@ export async function connect4Solution(battleId: string) {
             } else {
               // someone flip table
               if (timeout !== undefined) clearTimeout(timeout)
-              req.end()
-              resolve()
             }
           } else {
-            console.log(eventdata)
+            // end of game
+            console.log(data)
             if (timeout !== undefined) clearTimeout(timeout)
             req.end()
             resolve()
