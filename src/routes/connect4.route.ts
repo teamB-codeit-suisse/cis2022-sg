@@ -10,8 +10,8 @@ type Connect4Body = {
 
 const connect4 = async (req: Request, res: Response) => {
   const { battleId }: Connect4Body = req.body
-  connect4Solution(battleId)
   res.status(200).send()
+  connect4Solution(battleId)
 }
 
 router.post('/connect4', asyncErrorWrapper(connect4))

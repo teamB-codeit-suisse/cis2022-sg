@@ -26,11 +26,14 @@ export function connect4Solution(battleId: string) {
     if (data.hasOwnProperty('youAre')) {
       // initial event
       myToken = data['youAre']
-      postMove('A')
+      if (myToken === '🔴') {
+        postMove('A')
+      }
     } else if (data.hasOwnProperty('player')) {
       if (data.action === 'putToken') {
-        if (data.player === myToken) return
-        else {
+        if (data.player !== myToken) {
+          postMove('B')
+        } else {
           // someone flip table
           /* do nothing */
         }
