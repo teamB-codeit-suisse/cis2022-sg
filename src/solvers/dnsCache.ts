@@ -21,7 +21,7 @@ export function query(cacheSize: number, log: string[]) {
         count[log[i]] = 1;
       } else {
         output.push({status: "cache miss", ipaddress: lookup[log[i]]})
-        while(Object.keys(count).length >= cacheSize) {
+        while(Object.keys(count).length >= cacheSize || Object.keys(count).length === 0) {
           count[queue[0]]--;
           if (count[queue[0]] === 0) {
             delete count[queue[0]]
