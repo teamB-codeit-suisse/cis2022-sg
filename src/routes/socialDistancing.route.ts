@@ -8,7 +8,6 @@ type socialDistancingBody = string[]
 
 const socialDistancing = async (req: Request, res: Response) => {
   const inputs: socialDistancingBody = req.body
-  console.log(inputs)
   const outputs = inputs.map((input) => socialDistancingSolution(input))
   return res.status(200).json(outputs)
 }
