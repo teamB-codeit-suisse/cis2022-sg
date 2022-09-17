@@ -13,9 +13,20 @@ const reversleCelebrate = {
     resultHistory: Joi.array().items(Joi.string()),
   }),
 }
-const reversle = async (_req: Request, res: Response) => {
 
-  return res.status(200).json({ message: "hi" })
+type reversleBody = {
+  equationLength: number,
+  attemptsAllowed?: number,
+  attemptsLeft?: number,
+  equationHistory?: string[],
+  resultHistory?: string[]
+}
+
+const reversle = async (req: Request, res: Response) => {
+  const { equationLength }: reversleBody = req.body
+  const equation = []
+  for (let i = 0; i < equationLength; i++)equation.push('=')
+  return res.status(200).json({ equation })
 }
 
 router.post(
