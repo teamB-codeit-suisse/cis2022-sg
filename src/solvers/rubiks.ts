@@ -65,8 +65,10 @@ export function rubiksSolution(ops:String,
     let index = 0
     while (index < ops.length) {
       let inverse = false
-      if (ops.at(index+1) == 'i') {
-        inverse = true
+      if (index + 1 < ops.length) {
+        if (ops.at(index+1) === 'i') {
+          inverse = true
+        }
       }
       switch (ops.at(index)) {
         case 'U':
