@@ -21,6 +21,7 @@ export function connect4Solution(battleId: string) {
     }
     return placed
   }
+  /*
   const removeFromBoard = (column: string) => {
     const c = columns.indexOf(column)
     for (let i = 0; i < 6; i++) {
@@ -29,6 +30,7 @@ export function connect4Solution(battleId: string) {
       return
     }
   }
+  */
 
   let myToken = ''
 
