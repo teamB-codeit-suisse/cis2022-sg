@@ -1,5 +1,6 @@
 export function reverslePart1Solution(equationLength: number, _attemptsAllowed: number): string[] {
-  if (equationLength === 12) return '56*9-3+1/=24'.split('')
+  // if (equationLength === 12) return '56*9-3+1/=24'.split('')
+  if (equationLength === 12) return '63^8*1+=1729'.split('')
   else if (equationLength === 10) return '56*9-3+=24'.split('')
   else if (equationLength === 9) return '34*9-2+=5'.split('')
   else if (equationLength === 8) return '56*9-=21'.split('')
