@@ -49,9 +49,12 @@ function bruteforce(
       let cur:number = bought.get(year)!.get(name)!
       if (cur < stocks[name].qty) {
         if (capital >= stocks[name].price) {
-          let bought1 = Object.assign({}, bought);
-          let positions1 = Object.assign({}, positions);
-          let path1 = Object.assign({}, path);
+          let bought1 = new Map<number, Map<string, number>>();
+          for (const [key, value] of bought.entries()) {
+            bought1.set(key, value);
+          }
+          let positions1 = new Map<string, number>(positions);
+          let path1 = [...path]
           bought1.get(year)!.set(name, cur+1)
           positions1.set(name, positions.get(name)!+1)
           path1.push("b-" + name + "-1");
@@ -63,10 +66,12 @@ function bruteforce(
         }
       }
       if (positions.get(name)! > 0) {
-        let bought1 = Object.assign({}, bought);
-        let positions1 = Object.assign({}, positions);
-        let path1 = Object.assign({}, path);
-        bought1.get(year)!.set(name, cur+1)
+        let bought1 = new Map<number, Map<string, number>>();
+        for (const [key, value] of bought.entries()) {
+          bought1.set(key, value);
+        }
+        let positions1 = new Map<string, number>(positions);
+        let path1 = [...path]
         positions1.set(name, positions.get(name)!-1)
         path1.push("s-" + name + "-1");
         let res = bruteforce(capital+stocks[name].price, energy, year, positions1, bought1, path1, timeline)
@@ -78,9 +83,12 @@ function bruteforce(
     }
 
     if (year != 0) {
-      let bought1 = Object.assign({}, bought);
-      let positions1 = Object.assign({}, positions);
-      let path1 = Object.assign({}, path);
+      let bought1 = new Map<number, Map<string, number>>();
+      for (const [key, value] of bought.entries()) {
+        bought1.set(key, value);
+      }
+      let positions1 = new Map<string, number>(positions);
+      let path1 = [...path]
       let res = bruteforce(capital, energy-1, year+1, positions1, bought1, path1, timeline)
       if (res!.capital > best.capital) {
         best.capital = res!.capital;
@@ -89,10 +97,12 @@ function bruteforce(
     }
 
     if (year != -2) {
-
-      let bought1 = Object.assign({}, bought);
-      let positions1 = Object.assign({}, positions);
-      let path1 = Object.assign({}, path);
+      let bought1 = new Map<number, Map<string, number>>();
+      for (const [key, value] of bought.entries()) {
+        bought1.set(key, value);
+      }
+      let positions1 = new Map<string, number>(positions);
+      let path1 = [...path]
       let res = bruteforce(capital, energy-1, year-1, positions1, bought1, path1, timeline)
       if (res!.capital > best.capital) {
         best.capital = res!.capital;
@@ -109,7 +119,8 @@ function hardcode34(testcase:Testcase, stock_names:Set<string>) {
   bought.set(0, new Map<string, number>());
   bought.set(-1, new Map<string, number>());
   bought.set(-2, new Map<string, number>());
-  for (let name in stock_names) {
+  for (const name of stock_names) {
+    console.log(name);
     positions.set(name, 0);
     bought.get(0)!.set(name, 0);
     bought.get(-1)!.set(name, 0);
@@ -121,7 +132,7 @@ function hardcode34(testcase:Testcase, stock_names:Set<string>) {
 export function getStonks(input: Array<Testcase>) {
   let output = []
   for (let i = 0; i < input.length; i++) {
-    const { energy, capital, timeline } = input[i];
+    const { energy, timeline } = input[i];
     let s = new Set<string>()
     let t = new Set<string>()
     for (const time in input[i].timeline) {
@@ -136,7 +147,6 @@ export function getStonks(input: Array<Testcase>) {
     } else {
       output.push([])
     }
-    console.log(s.size, t.size, energy, capital)
   }
   return output
 }
