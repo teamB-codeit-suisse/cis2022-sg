@@ -37,7 +37,11 @@ const stonksHandler = async (req: Request, res: Response) => {
         b.add(stonks)
       }
     }
-    result.push([Object.keys(timeline).join('|')])
+    result.push([
+      Object.keys(timeline).length.toString(),
+      b.size.toString(),
+      Object.keys(timeline).join('|'),
+    ])
   }
   return res.status(200).json(result)
 }
