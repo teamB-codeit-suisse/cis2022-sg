@@ -14,6 +14,8 @@ const swissStigPart1Celebrate = {
           "upper" : Joi.number(),
         })),
       "maxRating" : Joi.number(),
+      "lucky" : Joi.number(),
+
     })
   )
 }
