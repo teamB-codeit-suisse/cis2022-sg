@@ -45,8 +45,13 @@ async function connect4Solution(battleId: string): Promise<void> {
                   flipTable()
                 } else {
                   game.play(columns.indexOf(data.column))
-                  game.playAI('hard')
-                  postMove(columns[game.plays[game.plays.length - 1]])
+                  if (game.gameStatus().gameOver) {
+                    if (timeout !== undefined) clearTimeout(timeout)
+                    flipTable()
+                  } else {
+                    game.playAI('hard')
+                    postMove(columns[game.plays[game.plays.length - 1]])
+                  }
                 }
               } else {
                 // my move
