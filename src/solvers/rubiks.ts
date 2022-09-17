@@ -106,7 +106,7 @@ export function rubiksSolution(
     } else if (curOps == 'D') {
       d = rotateFace(d, inverse)
       const temp = f[2]
-      if (inverse) {
+      if (!inverse) {
         f[2] = l[2]
         l[2] = b[2].reverse()
         b[2] = r[2].reverse()
