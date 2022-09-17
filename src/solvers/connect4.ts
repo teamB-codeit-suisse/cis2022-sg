@@ -2,7 +2,7 @@ import axios from 'axios'
 import https from 'https'
 import Connect4 from 'connect4-ai'
 
-export default async function connect4Solution(battleId: string): Promise<void> {
+async function connect4Solution(battleId: string): Promise<void> {
   const src = `https://cis2022-arena.herokuapp.com/connect4/play/${battleId}`
   const evtSrc = `https://cis2022-arena.herokuapp.com/connect4/start/${battleId}`
 
@@ -72,3 +72,5 @@ export default async function connect4Solution(battleId: string): Promise<void> 
     })
   })
 }
+
+module.exports = connect4Solution
