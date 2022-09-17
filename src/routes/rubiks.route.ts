@@ -7,32 +7,32 @@ const router = Router()
 
 const rubiksCelebrate = {
   [Segments.BODY]: Joi.object({
-    ops: Joi.string().required(),
+    ops: Joi.string(),
     state: Joi.object({
       u: Joi.array().items(
         Joi.array().items(
           Joi.number())
-        ).required(),
+        ),
       l: Joi.array().items(
         Joi.array().items(
           Joi.number())
-        ).required(),
+        ),
       f: Joi.array().items(
         Joi.array().items(
           Joi.number())
-        ).required(),
+        ),
       r: Joi.array().items(
         Joi.array().items(
           Joi.number())
-        ).required(),
+        ),
       b: Joi.array().items(
         Joi.array().items(
           Joi.number())
-        ).required(),
+        ),
       d: Joi.array().items(
         Joi.array().items(
           Joi.number())
-        ).required(),
+        )
     })
   }),
 }
