@@ -141,7 +141,6 @@ function hardcode34(testcase:Testcase, stock_names:Set<string>) {
     bought.get(-2)!.set(name, 0);
   }
   const { path, profit } = bruteforce(capital, energy, 0, positions, bought, [], timeline)
-  console.log(profit)
 
   return path
 }
@@ -159,7 +158,7 @@ export function getStonks(input: Array<Testcase>) {
         s.add(name)
       }
     }
-    if (t.size <= 3 && energy <= 4) {
+    if (s.size<= 2 && t.size <= 3 && energy <= 4) {
       output.push(hardcode34(input[i], s))
     } else {
       output.push([])
