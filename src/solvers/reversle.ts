@@ -42,6 +42,7 @@ export function reverslePart2Solution(
           for (let k = j + 1; k < equationLength; k++) {
             CONSTRAINTS.operators.forEach((operator) => constraints[k].delete(operator))
           }
+          CONSTRAINTS.digits.forEach((digit) => constraints[j - 1].delete(digit))
         }
       } else constraints[j].delete(equation[j])
     }
@@ -85,6 +86,7 @@ export function reverslePart2Solution(
       if (!checkValid(currentEquation)) return null
       return currentEquation
     }
+    if (index === equationLength - 1 && !hitEquals) return null
     for (const candidate of constraints[index].values()) {
       if (hitEquals && candidate === '=') continue
       if (hitEquals && CONSTRAINTS.operators.includes(candidate)) continue
