@@ -14,6 +14,7 @@ const instantiateDNSLookupCelebrate = {
 
 const simulateQueryCelebrate = {
   [Segments.BODY]: Joi.object({
+    testId: Joi.number(),
     cacheSize: Joi.number(),
     log: Joi.array().items(
       Joi.string()
