@@ -17,11 +17,10 @@ export function query(cacheSize: number, log: string[]) {
   let output = [];
   let queue:number[] = [];
   let index:number = 0;
-  console.log(log.length)
   for(let i = 0; i < log.length; i++) {
     if (log[i] in lookup) {
       let index1 = compression[log[i]]
-      if (log[i] in count) {
+      if (index1 in count) {
         output.push({status: "cache hit", ipaddress: lookup[log[i]]})
         count[index1]++;
       } else if (Object.keys(count).length < cacheSize) {
