@@ -43,16 +43,8 @@ export function swissStigPart1Solution (input: InterviewPart1[]) {
       }
     }
     for (let j = 0; j < input[i].questions.length; j++) {
-      let poss = true;
-      for(let k = 0; k <= input[i].questions[j].upper; k++) {
-        if (visited[k-1]) {
-          poss = false;
-        }
-      }
-      if (poss) {
-        if (input[i].questions[j].upper + 1 >= 1 && input[i].questions[j].upper + 1 <= input[i].maxRating) {
-          values.add(input[i].questions[j].upper+1);
-        }
+      if (input[i].questions[j].upper + 1 >= 1 && input[i].questions[j].upper + 1 <= input[i].maxRating) {
+        values.add(input[i].questions[j].upper+1);
       }
     }
     
