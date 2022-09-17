@@ -6,6 +6,8 @@ import morganBody from 'morgan-body'
 import { isCelebrateError } from 'celebrate'
 import bodyParser from 'body-parser'
 import { jsonErrorResponse } from './utils/errors'
+import JSON5 from 'json5'
+const path = require('path')
 
 dotenv.config()
 
@@ -15,8 +17,17 @@ const port = process.env.PORT || 8000
 if (app.get('env') !== 'test') {
   morganBody(app, { noColors: process.env.NODE_ENV === 'production' })
 }
-app.use(bodyParser.json({ limit: 1000000000 * 1024 }))
-app.use(bodyParser.text({ limit: 1000000000 * 1024 }))
+
+app.use(bodyParser.text({ type: '*/*' }))
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  req.body = JSON5.parse(req.body)
+  next()
+})
+// app.use(bodyParser.json())
+
+// app.use(bodyParser.json({ limit: 1000000000 * 1024 }))
+// app.use(bodyParser.text({ limit: 1000000000 * 1024 }))
+// app.use(bodyParser.json())
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (req.url === '/ping' || req.url === '/') {
@@ -25,6 +36,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 app.use('/', router)
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 // Attach error handler for celebrate validation
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
@@ -35,6 +47,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     })
     res.status(422).json({ message: allMessages.join('\n') })
   } else {
+    console.log(err)
     jsonErrorResponse(err, res)
   }
 })
