@@ -24,8 +24,10 @@ type reversleBody = {
 
 const reversle = async (req: Request, res: Response) => {
   const { equationLength }: reversleBody = req.body
-  const equation: string[] = []
-  for (let i = 0; i < equationLength; i++) equation.push('=')
+  console.log('GIVEN INPUT')
+  console.log(req.body)
+  const equation: string[] = ['0', '=']
+  for (let i = 2; i < equationLength; i++) equation.push('=')
   return res.status(200).json({ equation })
 }
 
