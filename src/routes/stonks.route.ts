@@ -31,13 +31,12 @@ const stonksHandler = async (req: Request, res: Response) => {
   const result: string[][] = []
   for (let i = 0; i < tests.length; i++) {
     const b = new Set()
-    const a = Object.keys(tests[i]).length
     for (const element of Object.values(tests[i])) {
       for (const stonks of Object.keys(element)) {
         b.add(stonks)
       }
     }
-    result.push([a.toString(), b.size.toString()])
+    result.push([Object.values(tests[i]).join('|')])
   }
   return res.status(200).json(result)
 }
