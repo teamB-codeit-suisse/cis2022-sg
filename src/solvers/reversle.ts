@@ -75,9 +75,14 @@ export function reverslePart2Solution(
     if (!Number.isFinite(left)) return false
     return left === right
   }
+
+  const startTime = Date.now()
+  let stop = false
   const generate = (index: number, currentEquation: string, hitEquals: boolean): string | null => {
+    if (stop) return null
     if (index === equationLength) {
       if (!hitEquals) return null
+      if (Date.now() - startTime > 10000) stop = true
       if (!checkValid(currentEquation)) return null
       return currentEquation
     }
@@ -94,5 +99,5 @@ export function reverslePart2Solution(
     return null
   }
 
-  return (generate(0, '', false) as string).split('')
+  return (generate(0, '', false) ?? '').split('')
 }
