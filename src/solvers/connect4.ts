@@ -1,7 +1,7 @@
 import axios from 'axios'
 import https from 'https'
 
-export function connect4Solution(battleId: string): void {
+export async function connect4Solution(battleId: string): Promise<void> {
   const src = `https://cis2022-arena.herokuapp.com/connect4/play/${battleId}`
   const evtSrc = `https://cis2022-arena.herokuapp.com/connect4/start/${battleId}`
 
@@ -32,77 +32,78 @@ export function connect4Solution(battleId: string): void {
 
   let myToken = ''
 
-  const postMove = (column: string) => {
-    setTimeout(async () => {
-      await axios
-        .post(src, {
-          action: 'putToken',
-          column,
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+  let timeout: NodeJS.Timeout | undefined
+  const play = (payload: unknown): void => {
+    timeout = setTimeout(async () => {
+      await axios.post(src, payload).catch(console.error)
     }, 500)
+  }
+  const postMove = (column: string) => {
+    play({ action: 'putToken', column })
   }
   const flipTable = () => {
-    setTimeout(() => {
-      axios
-        .post(src, {
-          action: '(╯°□°)╯︵ ┻━┻',
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }, 500)
+    play({ action: '(╯°□°)╯︵ ┻━┻' })
   }
-
-  type Message = {
-    youAre?: string
-    id: string
-    player?: string
-    action: string
-    column: string
-    winner: string
-  }
-  const req = https.get(evtSrc, (res) => {
-    res.on('data', (eventdata) => {
-      const text = new TextDecoder('utf-8').decode(eventdata)
-      const data = JSON.parse(text.replace('data: ', '')) as Message
-      const { youAre, player } = data
-      if (youAre) {
-        // initial event
-        myToken = youAre
-        if (myToken === '🔴') {
-          addMoveToBoard('D', 1)
-          postMove('D')
-        }
-      } else if (player) {
-        if (data.action === 'putToken') {
-          if (player !== myToken) {
-            const valid = addMoveToBoard(data.column, -1)
-            if (!valid) flipTable()
-            else {
-              for (let i = 0; i < 100; i++) {
-                const column = columns[Math.floor(Math.random() * 7)]
-                if (!addMoveToBoard(column, 1)) continue
-                postMove(column)
-              }
-              for (const col of columns) {
-                if (addMoveToBoard(col, 1)) {
-                  postMove(col)
-                  break
+  await new Promise<void>((resolve, _reject) => {
+    const req = https.get(evtSrc, (res) => {
+      res.on('data', (eventdata) => {
+        const text = new TextDecoder('utf-8').decode(eventdata)
+        try {
+          const data = JSON.parse(text.replace('data: ', ''))
+          const { youAre, action } = data
+          if (youAre) {
+            // initial event
+            myToken = data['youAre']
+            if (myToken === '🔴') {
+              addMoveToBoard('D', 1)
+              postMove('D')
+            }
+          } else if (action) {
+            if (data.action === 'putToken') {
+              if (data.player !== myToken) {
+                const valid = addMoveToBoard(data.column, -1)
+                if (!valid) {
+                  if (timeout !== undefined) clearTimeout(timeout)
+                  flipTable()
+                } else {
+                  let done = false
+                  for (let i = 0; i < 100; i++) {
+                    const column = columns[Math.floor(Math.random() * 7)]
+                    if (!addMoveToBoard(column, 1)) continue
+                    postMove(column)
+                    done = true
+                    break
+                  }
+                  if (!done) {
+                    for (const col of columns) {
+                      if (addMoveToBoard(col, 1)) {
+                        postMove(col)
+                        break
+                      }
+                    }
+                  }
                 }
+              } else {
+                // my move
+                // do nothing
               }
+            } else {
+              // someone flip table
+              if (timeout !== undefined) clearTimeout(timeout)
             }
           } else {
-            // someone flip table
-            /* do nothing */
+            // end of game
+            console.log(data)
+            if (timeout !== undefined) clearTimeout(timeout)
+            req.end()
+            resolve()
           }
+        } catch (err) {
+          console.error(err)
+          if (timeout !== undefined) clearTimeout(timeout)
+          flipTable()
         }
-      } else {
-        console.log(eventdata)
-        req.end()
-      }
+      })
     })
   })
 }
