@@ -15,7 +15,7 @@ async function connect4Solution(battleId: string): Promise<void> {
   const play = (payload: unknown): void => {
     timeout = setTimeout(async () => {
       await axios.post(src, payload).catch(console.error)
-    }, 500)
+    }, 200)
   }
   const postMove = (column: string) => {
     play({ action: 'putToken', column })
@@ -56,6 +56,7 @@ async function connect4Solution(battleId: string): Promise<void> {
             } else {
               // someone flip table
               if (timeout !== undefined) clearTimeout(timeout)
+              flipTable()
             }
           } else {
             // end of game
