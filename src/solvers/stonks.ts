@@ -84,7 +84,7 @@ function bruteforce(
             path1.push(s)
           }
 
-          let buy:number = Math.min(stocks[name].qty-bought.get(year)!.get(name)!, capital/stocks[name].price)
+          let buy:number = Math.min(stocks[name].qty-bought.get(year)!.get(name)!, Math.floor(capital/stocks[name].price))
 
           bought1.get(year)!.set(name, bought.get(year)!.get(name)!+buy)
           positions1.set(name, positions.get(name)!+buy)
