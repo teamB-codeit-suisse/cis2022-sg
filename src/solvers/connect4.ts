@@ -50,7 +50,7 @@ async function connect4Solution(battleId: string): Promise<void> {
                     if (timeout !== undefined) clearTimeout(timeout)
                     flipTable()
                   } else {
-                    game.playAI('hard')
+                    game.playAI('easy')
                     postMove(columns[game.plays[game.plays.length - 1]])
                   }
                 }
