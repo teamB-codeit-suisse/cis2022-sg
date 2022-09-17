@@ -36,7 +36,7 @@ const stonksHandler = async (req: Request, res: Response) => {
         b.add(stonks)
       }
     }
-    result.push([Object.values(tests[i]).join('|')])
+    result.push([Object.keys(tests[i]).join('|')])
   }
   return res.status(200).json(result)
 }
