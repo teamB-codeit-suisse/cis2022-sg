@@ -5,6 +5,7 @@ import tickerStreamRouter from './tickerStream.route'
 import cryptocollapzRouter from './cryptocollapz.route'
 import calendarDaysRouter from './calendarDays.route'
 import rubiksRouter from './rubiks.route'
+import reversleRouter from './reversle.route'
 import travellingSuisseRobot from './travellingSuisseRobot.route'
 
 const router = Router()
@@ -15,5 +16,6 @@ router.use(cryptocollapzRouter)
 router.use(calendarDaysRouter)
 router.use(rubiksRouter)
 router.use(travellingSuisseRobot)
+router.use(reversleRouter)
 
 export default router

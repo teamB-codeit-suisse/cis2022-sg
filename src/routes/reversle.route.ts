@@ -15,24 +15,20 @@ const reversleCelebrate = {
 }
 
 type reversleBody = {
-  equationLength: number,
-  attemptsAllowed?: number,
-  attemptsLeft?: number,
-  equationHistory?: string[],
+  equationLength: number
+  attemptsAllowed?: number
+  attemptsLeft?: number
+  equationHistory?: string[]
   resultHistory?: string[]
 }
 
 const reversle = async (req: Request, res: Response) => {
   const { equationLength }: reversleBody = req.body
-  const equation = []
-  for (let i = 0; i < equationLength; i++)equation.push('=')
+  const equation: string[] = []
+  for (let i = 0; i < equationLength; i++) equation.push('=')
   return res.status(200).json({ equation })
 }
 
-router.post(
-  '/reversle',
-  celebrate(reversleCelebrate),
-  asyncErrorWrapper(reversle)
-)
+router.post('/reversle', celebrate(reversleCelebrate), asyncErrorWrapper(reversle))
 
 export default router

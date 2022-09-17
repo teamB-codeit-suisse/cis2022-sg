@@ -18,7 +18,6 @@ if (app.get('env') !== 'test') {
 app.use(bodyParser.json({ limit: 1000000000 * 1024 }))
 app.use(bodyParser.text({ limit: 1000000000 * 1024 }))
 
-
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (req.url === '/ping' || req.url === '/') {
     res.status(200).json({ message: 'pong' })
