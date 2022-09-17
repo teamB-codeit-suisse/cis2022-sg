@@ -36,9 +36,12 @@ export function reverslePart2Solution(
       freq[equation[j]] += result[j] === '2' ? 2 : result[j] === '1' ? 1 : 0
       if (result[j] === '2') {
         constraints[j] = new Set([equation[j]])
-        if (equation[j] === '=') constraints.forEach((constraint) => constraint.delete('='))
-        for (let k = j + 1; k < equationLength; k++) {
-          CONSTRAINTS.operators.forEach((operator) => constraints[k].delete(operator))
+        if (equation[j] === '=') {
+          constraints.forEach((constraint) => constraint.delete('='))
+          constraints[j].add('=')
+          for (let k = j + 1; k < equationLength; k++) {
+            CONSTRAINTS.operators.forEach((operator) => constraints[k].delete(operator))
+          }
         }
       } else constraints[j].delete(equation[j])
     }
@@ -76,19 +79,24 @@ export function reverslePart2Solution(
     return left === right
   }
 
-  const startTime = Date.now()
-  let stop = false
   const generate = (index: number, currentEquation: string, hitEquals: boolean): string | null => {
-    if (stop) return null
     if (index === equationLength) {
       if (!hitEquals) return null
-      if (Date.now() - startTime > 10000) stop = true
       if (!checkValid(currentEquation)) return null
       return currentEquation
     }
     for (const candidate of constraints[index].values()) {
       if (hitEquals && candidate === '=') continue
       if (hitEquals && CONSTRAINTS.operators.includes(candidate)) continue
+      if (candidate === '=') {
+        let digitCount = 0
+        let operatorCount = 0
+        for (const c of currentEquation) {
+          if (CONSTRAINTS.digits.includes(c)) digitCount++
+          if (CONSTRAINTS.operators.includes(c)) operatorCount++
+        }
+        if (operatorCount !== digitCount - 1) return null
+      }
       const nextEquation = generate(
         index + 1,
         currentEquation + candidate,
