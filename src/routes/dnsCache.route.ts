@@ -33,7 +33,6 @@ const simulateQuery = async (req: Request, res: Response) => {
   const output = query(cacheSize, log);
   console.log(output)
   return res.status(200).json({ status:200, "JSON": output })
-
 }
 
 router.post('/instantiateDNSLookup', celebrate(instantiateDNSLookupCelebrate), asyncErrorWrapper(instantiateDNSLookup))

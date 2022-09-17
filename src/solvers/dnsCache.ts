@@ -41,7 +41,7 @@ export function query(cacheSize: number, log: string[]) {
       }
       queue.push(index1)
     } else {
-      output.push({status: "invalid", ipaddress: null})
+      output.push({status: "invalid", ipAddress: null})
     }
   }
   return output
