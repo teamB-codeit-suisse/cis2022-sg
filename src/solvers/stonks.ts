@@ -148,7 +148,7 @@ function hardcode34(testcase:Testcase, stock_names:Set<string>) {
 export function getStonks(input: Array<Testcase>) {
   let output = []
   for (let i = 0; i < input.length; i++) {
-    const { energy, timeline } = input[i];
+    const { energy, capital, timeline } = input[i];
     let s = new Set<string>()
     let t = new Set<string>()
     for (const time in input[i].timeline) {
@@ -158,11 +158,13 @@ export function getStonks(input: Array<Testcase>) {
         s.add(name)
       }
     }
-    if (s.size<= 2 && t.size <= 3 && energy <= 4) {
-      output.push(hardcode34(input[i], s))
-    } else {
+    console.log(s.size, t.size, energy, capital)
+    
+    //if (s.size<= 2 && t.size <= 3 && energy <= 4) {
+      //output.push(hardcode34(input[i], s))
+    //} else {
       output.push([])
-    }
+    //}
   }
   return output
 }
