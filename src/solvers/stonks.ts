@@ -187,7 +187,7 @@ export function getStonks(input: Array<Testcase>) {
     }
     console.log(s.size, t.size, energy, capital)
     
-    if (t.size <= 3 && energy <= 4) {
+    if (s.size < 3 && t.size <= 3 && energy <= 4) {
       output.push(hardcode34(input[i], s))
     } else {
       output.push([])
