@@ -37,7 +37,7 @@ const stonksHandler = async (req: Request, res: Response) => {
         b.add(stonks)
       }
     }
-    result.push([a.toString(), b.toString()])
+    result.push([a.toString(), b.size.toString()])
   }
   return res.status(200).json(result)
 }
