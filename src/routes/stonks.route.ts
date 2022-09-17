@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express'
 import { celebrate, Joi, Segments } from 'celebrate'
 import { asyncErrorWrapper } from '../utils/errors'
-import { getStonks } from '../solvers/stonks'
+import { getStonks, Testcase } from '../solvers/stonks'
 
 const router = Router()
 
@@ -14,7 +14,7 @@ const stonksCelebrate = {
 }
 
 const stonks = async (req: Request, res: Response) => {
-  const input = req.body
+  const input: Testcase[] = req.body
   const output = getStonks(input)
   return res.status(200).json(output)
 }
