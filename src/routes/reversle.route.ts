@@ -27,8 +27,8 @@ const reversle = async (req: Request, res: Response) => {
   } else {
     // subsequent queries
     equation = reverslePart2Solution(equationLength, equationHistory, resultHistory, attemptsLeft)
+    console.log(equationHistory, resultHistory, equation)
   }
-  //test
   return res.status(200).json({ equation })
 }
 

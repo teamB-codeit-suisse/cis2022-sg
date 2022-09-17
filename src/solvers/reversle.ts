@@ -43,7 +43,9 @@ export function reverslePart2Solution(
           for (let k = j + 1; k < equationLength; k++) {
             CONSTRAINTS.operators.forEach((operator) => constraints[k].delete(operator))
           }
-          CONSTRAINTS.digits.forEach((digit) => constraints[j - 1].delete(digit))
+          if (j !== 1) {
+            CONSTRAINTS.digits.forEach((digit) => constraints[j - 1].delete(digit))
+          }
         }
       } else constraints[j].delete(equation[j])
     }
