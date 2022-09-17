@@ -33,7 +33,7 @@ async function connect4Solution(battleId: string): Promise<void> {
             // initial event
             myToken = data['youAre']
             if (myToken === '🔴') {
-              game.playAI('hard')
+              game.playAI('easy')
               postMove(columns[game.plays[game.plays.length - 1]])
             }
           } else if (data.hasOwnProperty('action')) {
