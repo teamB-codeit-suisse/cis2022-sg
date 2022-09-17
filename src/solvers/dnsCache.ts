@@ -1,6 +1,6 @@
 export type Lookup = Map<string, string>
-let compression:Map<string, number>
-let lookup:Lookup
+let compression:Map<string, number> = new Map<string, number>()
+let lookup:Lookup = new Map<string, string>()
 
 export function setLookUp(table: Lookup) {
   lookup = new Map<string, string>()
@@ -10,7 +10,6 @@ export function setLookUp(table: Lookup) {
     lookup.set(key, value)
     compression.set(key, index);
     index++
-
   }
 }
 
