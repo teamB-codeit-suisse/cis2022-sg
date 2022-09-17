@@ -6,6 +6,7 @@ import morganBody from 'morgan-body'
 import { isCelebrateError } from 'celebrate'
 import bodyParser from 'body-parser'
 import { jsonErrorResponse } from './utils/errors'
+const path = require('path')
 
 dotenv.config()
 
@@ -28,6 +29,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 app.use('/', router)
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 // Attach error handler for celebrate validation
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {

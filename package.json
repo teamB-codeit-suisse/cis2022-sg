@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node build/server.js",
     "dev": "NODE_ENV=development tsc-watch --onSuccess \"node -r dotenv/config ./build/server.js\"",
-    "build": "tsc",
+    "build": "tsc && npm run copy-public",
+    "copy-public":  "cp -r ./src/public/ ./build/public",
     "test": "jest --runInBand",
     "lint-no-fix": "tsc --noEmit && eslint --ext .js,.ts --cache .",
     "lint": "npm run lint-no-fix -- --fix"
