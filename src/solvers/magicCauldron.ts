@@ -20,7 +20,7 @@ export function magicCauldronPart1(input: Part1Input) {
     }
     amounts = nextAmounts
   }
-  return Math.min(100, amounts[col_number])
+  return Math.round(Math.min(100, amounts[col_number]) * 100) / 100
 }
 
 export function magicCauldronPart2(input: Part2Input) {
@@ -58,7 +58,7 @@ export function magicCauldronPart3(input: Part3Input) {
     }
     amounts = nextAmounts
   }
-  return Math.min(col_number % 2 === 0 ? 150 : 100, amounts[col_number])
+  return Math.round(Math.min(col_number % 2 === 0 ? 150 : 100, amounts[col_number]) * 100) / 100
 }
 
 export function magicCauldronPart4(input: Part4Input) {
