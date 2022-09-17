@@ -101,6 +101,9 @@ export function connect4Solution(battleId: string): void {
           }
         } else {
           // someone flip table
+          if (data.player !== myToken) {
+            flipTable()
+          }
           // do nothing
         }
       } else {
