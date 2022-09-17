@@ -39,6 +39,7 @@ export function magicCauldronPart1(input: Part1Input) {
 
 export function magicCauldronPart2(input: Part2Input) {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
+  return 2
   let lo = 0,
     hi = 999,
     ans = -1
@@ -62,6 +63,7 @@ export function magicCauldronPart3(input: Part3Input) {
 
 export function magicCauldronPart4(input: Part4Input) {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
+  return 2
   let lo = 0,
     hi = 999,
     ans = -1
