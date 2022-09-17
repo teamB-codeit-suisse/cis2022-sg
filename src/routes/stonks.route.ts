@@ -25,6 +25,7 @@ type stonksBody = {
 }
 
 const stonksHandler = async (req: Request, res: Response) => {
+  //@ts-ignore
   const { energy, capital, timeline }: stonksBody = req.body
   return res.status(200).json({ message: 'helloworld' })
 }
