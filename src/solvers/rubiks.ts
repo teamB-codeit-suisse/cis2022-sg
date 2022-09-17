@@ -106,10 +106,10 @@ export function rubiksSolution(ops:String,
           var d1 = d.map(function(value,_) { return value[2]; });
           var b1 = b.map(function(value,_) { return value[2]; });
           rotateSide(f1, u1, b1, d1, inverse)
-          for (let i = 0; i < u1.length; i++) u[i][0]=u1[i]
-          for (let i = 0; i < f1.length; i++) f[i][0]=f1[i]
-          for (let i = 0; i < d1.length; i++) d[i][0]=d1[i]
-          for (let i = 0; i < b1.length; i++) b[i][0]=b1[i]
+          for (let i = 0; i < u1.length; i++) u[i][2]=u1[i]
+          for (let i = 0; i < f1.length; i++) f[i][2]=f1[i]
+          for (let i = 0; i < d1.length; i++) d[i][2]=d1[i]
+          for (let i = 0; i < b1.length; i++) b[i][2]=b1[i]
           break;
         case 'B':
           rotateFace(b, inverse)
