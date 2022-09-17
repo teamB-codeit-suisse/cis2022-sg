@@ -7,14 +7,7 @@ const router = Router()
 const echoCelebrate = {
   [Segments.BODY]: Joi.array().items(
     Joi.object({
-      questions: Joi.array()
-        .items(
-          Joi.object({
-            from: Joi.number(),
-            to: Joi.number(),
-          })
-        )
-        .required(),
+      questions: Joi.array().items(Joi.object()).required(),
       maxRating: Joi.number().required(),
       lucky: Joi.number(),
     })
