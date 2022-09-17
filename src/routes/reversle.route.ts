@@ -4,16 +4,6 @@ import { asyncErrorWrapper } from '../utils/errors'
 
 const router = Router()
 
-const reversleCelebrate = {
-  [Segments.BODY]: Joi.object({
-    equationLength: Joi.number().required(),
-    attemptsAllowed: Joi.number(),
-    attemptsLeft: Joi.number(),
-    equationHistory: Joi.array().items(Joi.string()),
-    resultHistory: Joi.array().items(Joi.string()),
-  }),
-}
-
 type reversleBody = {
   equationLength: number
   attemptsAllowed?: number
@@ -31,6 +21,6 @@ const reversle = async (req: Request, res: Response) => {
   return res.status(200).json({ equation })
 }
 
-router.post('/reversle', celebrate(reversleCelebrate), asyncErrorWrapper(reversle))
+router.post('/reversle', asyncErrorWrapper(reversle))
 
 export default router
