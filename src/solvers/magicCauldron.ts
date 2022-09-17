@@ -8,78 +8,77 @@ export type Part2Input = Position & { flow_rate: number; amount_of_soup: number 
 export type Part3Input = Position & { flow_rate: number; time: number }
 export type Part4Input = Position & { flow_rate: number; amount_of_soup: number }
 
-export function magicCauldronPart1(input: Part1Input) {
-  const { flow_rate, time, row_number, col_number } = input
-  let amounts = [flow_rate * time]
-  for (let i = 0; i < row_number; i++) {
+function simulate(
+  amount: number,
+  row: number,
+  col: number,
+  cap: (r: number, c: number) => number
+): number {
+  let amounts = [amount]
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j <= i; j++) amounts[i] -= cap(i, j)
     const nextAmounts = Array(i + 2).fill(0)
-    for (let j = 0; j <= i; j++) amounts[j] = Math.max(0, amounts[j] - 100)
     for (let j = 0; j <= i; j++) {
+      if (amounts[j] <= 0) continue
       nextAmounts[j] += amounts[j] / 2
       nextAmounts[j + 1] += amounts[j] / 2
     }
     amounts = nextAmounts
   }
-  return Math.round(Math.min(100, amounts[col_number]) * 100) / 100
+  return Math.min(cap(row, col), amounts[col])
+}
+
+export function magicCauldronPart1(input: Part1Input) {
+  const { flow_rate, time, row_number, col_number } = input
+  const ans = simulate(flow_rate * time, row_number, col_number, () => 100)
+  return Math.round(ans * 100) / 100
 }
 
 export function magicCauldronPart2(input: Part2Input) {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
   let lo = 0,
-    hi = 999
-  while (hi - lo > 0.01) {
-    const mid = (lo + hi) / 2
-    let amounts = [flow_rate * mid]
-    for (let i = 0; i < row_number; i++) {
-      const nextAmounts = Array(i + 2).fill(0)
-      for (let j = 0; j <= i; j++) amounts[j] = Math.max(0, amounts[j] - 100)
-      for (let j = 0; j <= i; j++) {
-        nextAmounts[j] += amounts[j] / 2
-        nextAmounts[j + 1] += amounts[j] / 2
-      }
-      amounts = nextAmounts
-    }
-    const value = amounts[col_number]
-    if (value < amount_of_soup) lo = mid
-    else hi = mid
+    hi = 999,
+    ans = -1
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2)
+    const value = simulate(flow_rate * mid, row_number, col_number, () => 100)
+    if (value <= amount_of_soup) {
+      lo = mid + 1
+      ans = mid
+    } else hi = mid - 1
   }
-  return Math.round((lo + hi) / 2)
+  if (simulate(flow_rate * (ans + 0.5), row_number, col_number, () => 100) <= amount_of_soup) ans++
+  return ans
 }
 
 export function magicCauldronPart3(input: Part3Input) {
   const { flow_rate, time, row_number, col_number } = input
-  let amounts = [flow_rate * time]
-  for (let i = 0; i < row_number; i++) {
-    const nextAmounts = Array(i + 2).fill(0)
-    for (let j = 0; j <= i; j++) amounts[j] = Math.max(0, amounts[j] - (j % 2) === 0 ? 150 : 100)
-    for (let j = 0; j <= i; j++) {
-      nextAmounts[j] += amounts[j] / 2
-      nextAmounts[j + 1] += amounts[j] / 2
-    }
-    amounts = nextAmounts
-  }
-  return Math.round(Math.min(col_number % 2 === 0 ? 150 : 100, amounts[col_number]) * 100) / 100
+  const ans = simulate(flow_rate * time, row_number, col_number, (_, c) =>
+    c % 2 === 0 ? 150 : 100
+  )
+  return Math.round(ans * 100) / 100
 }
 
 export function magicCauldronPart4(input: Part4Input) {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
   let lo = 0,
-    hi = 999
-  while (hi - lo > 0.01) {
-    const mid = (lo + hi) / 2
-    let amounts = [flow_rate * mid]
-    for (let i = 0; i < row_number; i++) {
-      const nextAmounts = Array(i + 2).fill(0)
-      for (let j = 0; j <= i; j++) amounts[j] = Math.max(0, amounts[j] - (j % 2) === 0 ? 150 : 100)
-      for (let j = 0; j <= i; j++) {
-        nextAmounts[j] += amounts[j] / 2
-        nextAmounts[j + 1] += amounts[j] / 2
-      }
-      amounts = nextAmounts
-    }
-    const value = amounts[col_number]
-    if (value < amount_of_soup) lo = mid
-    else hi = mid
+    hi = 999,
+    ans = -1
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2)
+    const value = simulate(flow_rate * mid, row_number, col_number, (_, c) =>
+      c % 2 === 0 ? 150 : 100
+    )
+    if (value <= amount_of_soup) {
+      lo = mid + 1
+      ans = mid
+    } else hi = mid - 1
   }
-  return Math.round((lo + hi) / 2)
+  if (
+    simulate(flow_rate * (ans + 0.5), row_number, col_number, (_, c) =>
+      c % 2 === 0 ? 150 : 100
+    ) <= amount_of_soup
+  )
+    ans++
+  return ans
 }

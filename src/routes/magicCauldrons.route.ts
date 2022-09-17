@@ -66,7 +66,6 @@ const magicCauldron = async (req: Request, res: Response) => {
       part3: part3Solution,
       part4: part4Solution,
     })
-    console.log(ans)
   }
   res.status(200).send(ans)
 }
