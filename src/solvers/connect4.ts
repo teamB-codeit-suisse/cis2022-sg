@@ -8,6 +8,7 @@ async function connect4Solution(battleId: string): Promise<void> {
 
   const columns = 'ABCDEFG'
   const game = new (Connect4.Connect4AI as any)()
+  game.recursiveDepthLimit = 5
 
   let myToken = ''
 
@@ -56,10 +57,6 @@ async function connect4Solution(battleId: string): Promise<void> {
               } else {
                 // my move
                 // do nothing
-                if (columns.indexOf(data.column) !== game.plays[game.plays.length - 1]) {
-                  if (timeout !== undefined) clearTimeout(timeout)
-                  flipTable()
-                }
               }
             } else {
               // someone flip table
@@ -77,8 +74,6 @@ async function connect4Solution(battleId: string): Promise<void> {
               if (timeout !== undefined) clearTimeout(timeout)
               flipTable()
             }
-            req.end()
-            resolve()
           }
         } catch (err) {
           console.error(err)
