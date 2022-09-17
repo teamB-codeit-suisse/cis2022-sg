@@ -1,24 +1,32 @@
 export type Lookup = {[key:string]: string};
-
+let compression: {[key:string]: number} = {}
 let lookup:Lookup = {}
 
 export function setLookUp(table: Lookup) {
   lookup = table;
+  compression = {};
+  let index = 0;
+  for (const [key, value] of Object.entries(lookup)) {
+    compression[key] = index;
+    index++
+  }
 }
 
 export function query(cacheSize: number, log: string[]) {
-  let count: {[key:string]: number}= {};
+  let count: {[key:number]: number}= {};
   let output = [];
-  let queue:string[] = [];
+  let queue:number[] = [];
   let index:number = 0;
+  console.log(log.length)
   for(let i = 0; i < log.length; i++) {
-    if (log[i] in lookup) {    
-       if (log[i] in count) {
+    if (log[i] in lookup) {
+      let index1 = compression[log[i]]
+      if (log[i] in count) {
         output.push({status: "cache hit", ipaddress: lookup[log[i]]})
-        count[log[i]]++;
+        count[index1]++;
       } else if (Object.keys(count).length < cacheSize) {
         output.push({status: "cache miss", ipaddress: lookup[log[i]]})
-        count[log[i]] = 1;
+        count[index1] = 1;
       } else {
         output.push({status: "cache miss", ipaddress: lookup[log[i]]})
         while(Object.keys(count).length >= cacheSize && Object.keys(count).length != 0) {
@@ -29,7 +37,7 @@ export function query(cacheSize: number, log: string[]) {
           index++;
         }
       }
-      queue.push(log[i])
+      queue.push(index1)
     } else {
       output.push({status: "invalid", ipaddress: null})
     }
