@@ -42,8 +42,9 @@ const sum = async (req: Request, res: Response) => {
   for (const testcase of testcases) {
     const { questions, lucky, maxRating } = testcase
     let p = 0
-    let q = 5
+    let q = 0
     let cnt = 0
+    let sum = 0
     const offset = lucky || 0
     for (const question of questions) {
       let { from, to } = question
@@ -53,15 +54,17 @@ const sum = async (req: Request, res: Response) => {
       to += p * offset
       to %= maxRating - 1
       to += 1
-      let cur = 0
-      if (to >= from) cur = to - from + 1
-      p *= cnt
+      //   console.log(from)
+      //   console.log(to)
+      if (to >= from) sum += to - from + 1
+      p = sum
       cnt += 1
-      p += cur
-      q *= cnt
+      q = cnt * maxRating
       const d = gcd(p, q)
       p /= d
       q /= d
+      //   console.log(p)
+      //   console.log(q)
     }
     if (p == 0) q = 1
     result.push({ p, q })
