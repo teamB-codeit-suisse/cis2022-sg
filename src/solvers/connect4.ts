@@ -8,7 +8,7 @@ async function connect4Solution(battleId: string): Promise<void> {
 
   const columns = 'ABCDEFG'
   const game = new (Connect4.Connect4AI as any)()
-  game.recursiveDepthLimit = 5
+  game.recursiveDepthLimit = 4
 
   let myToken = ''
 
