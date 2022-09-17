@@ -6,7 +6,7 @@ export function setLookUp(table: Lookup) {
   lookup = table;
   compression = {};
   let index = 0;
-  for (const [key, value] of Object.entries(lookup)) {
+  for (const [key, _] of Object.entries(lookup)) {
     compression[key] = index;
     index++
   }
