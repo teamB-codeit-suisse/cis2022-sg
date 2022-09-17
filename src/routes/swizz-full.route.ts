@@ -44,7 +44,7 @@ function gcd(x: number, y: number): number {
 const sum = async (req: Request, res: Response) => {
   const { questions, maxRating, lucky }: body = req.body
   let p = 0
-  let q = 1
+  let q = 5
   let cnt = 0
   for (const question of questions) {
     let { lower, higher } = question

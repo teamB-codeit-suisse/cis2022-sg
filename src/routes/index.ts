@@ -7,6 +7,7 @@ import calendarDaysRouter from './calendarDays.route'
 import rubiksRouter from './rubiks.route'
 import travellingSuisseRobot from './travellingSuisseRobot.route'
 import magicCauldron from './magicCauldrons.route'
+import stigfullRouter from './swizz-full.route'
 
 const router = Router()
 router.use('/', echoRouter)
@@ -17,5 +18,6 @@ router.use(calendarDaysRouter)
 router.use(rubiksRouter)
 router.use(travellingSuisseRobot)
 router.use(magicCauldron)
+router.use(stigfullRouter)
 
 export default router
