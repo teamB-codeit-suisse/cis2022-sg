@@ -40,6 +40,7 @@ function solve(
       ansDistance = distance + getDistance(currentPosition, nextPosition)
       ansInstructions = getInstructions(currentPosition, nextPosition) + 'P' + instructions
     }
+    nextPosition.used = false
   }
   return { distance: ansDistance, instructions: ansInstructions }
 }
