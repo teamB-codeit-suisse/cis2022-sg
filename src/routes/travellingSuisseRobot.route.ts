@@ -12,7 +12,11 @@ const travellingSuisseRobotCelebrate = {
 const travellingSuisseRobot = async (req: Request, res: Response) => {
   const mapString = req.body
   const solution = travellingSuisseRobotSolution(mapString)
-  return res.status(200).contentType('text/plain').send(solution)
+  // manually set Content-Type
+  // as express will add charset automatically to Content-Type
+  res.writeHead(200, { 'Content-Type': 'text/plain' })
+  res.write(solution)
+  res.end()
 }
 
 router.post(
