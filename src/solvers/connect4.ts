@@ -86,6 +86,7 @@ export function connect4Solution(battleId: string): void {
                 const column = columns[Math.floor(Math.random() * 7)]
                 if (!addMoveToBoard(column, 1)) continue
                 postMove(column)
+                break
               }
               for (const col of columns) {
                 if (addMoveToBoard(col, 1)) {
@@ -95,9 +96,12 @@ export function connect4Solution(battleId: string): void {
               }
             }
           } else {
-            // someone flip table
-            /* do nothing */
+            // my move
+            // do nothing
           }
+        } else {
+          // someone flip table
+          // do nothing
         }
       } else {
         console.log(eventdata)
