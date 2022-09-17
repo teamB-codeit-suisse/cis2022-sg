@@ -78,41 +78,43 @@ function bruteforce(
           bought1.set(0, new  Map<string, number>(bought.get(0)!));
           bought1.set(-1, new  Map<string, number>(bought.get(-1)!));
           bought1.set(-2, new  Map<string, number>(bought.get(-2)!));
-
           let positions1 = new Map<string, number>(positions);
           let path1 = []
           for (const s of path) {
             path1.push(s)
           }
 
-          bought1.get(year)!.set(name, bought.get(year)!.get(name)!+1)
-          positions1.set(name, positions.get(name)!+1)
-          path1.push("b-" + name + "-1");
-          let res = bruteforce(capital-stocks[name].price, energy, year, positions1, bought1, path1, timeline)
+          let buy:number = Math.min(stocks[name].qty-bought.get(year)!.get(name)!, capital/stocks[name].price)
+
+          bought1.get(year)!.set(name, bought.get(year)!.get(name)!+buy)
+          positions1.set(name, positions.get(name)!+buy)
+          path1.push("b-" + name + "-" + JSON.stringify(buy));
+          let res = bruteforce(capital-buy*stocks[name].price, energy, year, positions1, bought1, path1, timeline)
           if (res!.profit > best.profit) {
             best.profit = res!.profit;
             best.path = res!.path;
           }
         }
       }
-      // if (positions.get(name)! > 0) {
-      //   let bought1 = new Map<number, Map<string, number>>();
-      //   bought1.set(0, new  Map<string, number>(bought.get(0)!));
-      //   bought1.set(-1, new  Map<string, number>(bought.get(-1)!));
-      //   bought1.set(-2, new  Map<string, number>(bought.get(-2)!));
-      //   let positions1 = new Map<string, number>(positions);
-      //   let path1 = []
-      //   for (const s of path) {
-      //     path1.push(s)
-      //   }
-      //   positions1.set(name, positions.get(name)!-1)
-      //   path1.push("s-" + name + "-1");
-      //   let res = bruteforce(capital+stocks[name].price, energy, year, positions1, bought1, path1, timeline)
-      //   if (res!.profit > best.profit) {
-      //     best.profit = res!.profit;
-      //     best.path = res!.path;
-      //   }
-      // }
+      if (positions.get(name)! > 0) {
+        let bought1 = new Map<number, Map<string, number>>();
+        bought1.set(0, new  Map<string, number>(bought.get(0)!));
+        bought1.set(-1, new  Map<string, number>(bought.get(-1)!));
+        bought1.set(-2, new  Map<string, number>(bought.get(-2)!));
+        let positions1 = new Map<string, number>(positions);
+        let path1 = []
+        for (const s of path) {
+          path1.push(s)
+        }
+        let sell:number = positions.get(name)!
+        positions1.set(name, 0)
+        path1.push("s-" + name + "-" +  + JSON.stringify(sell));
+        let res = bruteforce(capital+stocks[name].price*sell, energy, year, positions1, bought1, path1, timeline)
+        if (res!.profit > best.profit) {
+          best.profit = res!.profit;
+          best.path = res!.path;
+        }
+      }
     }
 
     if (year != 0) {
