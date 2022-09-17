@@ -23,13 +23,13 @@ export function connect4Solution(battleId: string) {
     winner: string
   }
   let count = 0
-  evtSource.onmessage = (event: MessageEvent<Message>) => {
+  evtSource.onmessage = (event: MessageEvent<string>) => {
     console.log('New event')
     console.log(event)
     count++
     if (count > 50) evtSource.close()
 
-    const data = event.data
+    const data = JSON.parse(event.data) as Message
     if (data.hasOwnProperty('youAre')) {
       // initial event
       myToken = data['youAre']
