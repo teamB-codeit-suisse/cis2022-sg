@@ -5,6 +5,7 @@ import tickerStreamRouter from './tickerStream.route'
 import cryptocollapzRouter from './cryptocollapz.route'
 import calendarDaysRouter from './calendarDays.route'
 import rubiksRouter from './rubiks.route'
+import swissStigRouter from './swissStig.route'
 
 const router = Router()
 router.use('/', echoRouter)
@@ -13,5 +14,6 @@ router.use(tickerStreamRouter)
 router.use(cryptocollapzRouter)
 router.use(calendarDaysRouter)
 router.use(rubiksRouter)
+router.use(swissStigRouter)
 
 export default router

@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express'
 import { celebrate, Joi, Segments } from 'celebrate'
 import { asyncErrorWrapper } from '../utils/errors'
-import { swissStigPart1Solution, swissStigPart2Solution } from '../solvers/swissStig'
+import { Accuracy, InterviewPart1, InterviewPart2, swissStigPart1Solution, swissStigPart2Solution } from '../solvers/swissStig'
 
 const router = Router()
 
@@ -32,25 +32,9 @@ const swissStigPart2Celebrate = {
   )
 }
 
-type Question = {
-  lower: number,
-  higher: number
-}
-
-type InterviewPart1 = {
-  questions: Question[],
-  maxRating: number
-}
-
-type InterviewPart2 = {
-  questions: Question[],
-  maxRating: number,
-  lucky: number
-}
-
 const swissStigPart1 = async (req: Request, res: Response) => {
   const input : InterviewPart1[] = req.body
-  const output = swissStigPart1Solution(input)
+  const output : Accuracy[] = swissStigPart1Solution(input)
   return res.status(200).json(output)
 }
 
