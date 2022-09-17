@@ -11,7 +11,7 @@ const swissStigPart1Celebrate = {
       "questions" : Joi.array().items(
         Joi.object({
           "lower" : Joi.number(),
-          "higher" : Joi.number()
+          "higher" : Joi.number(),
         })),
       "maxRating" : Joi.number(),
     })
@@ -24,7 +24,7 @@ const swissStigPart2Celebrate = {
       "questions" : Joi.array().items(
         Joi.object({
           "lower" : Joi.number(),
-          "higher" : Joi.number()
+          "higher" : Joi.number(),
         })),
       "maxRating" : Joi.number(),
       "lucky" : Joi.number(),
