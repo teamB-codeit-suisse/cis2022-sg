@@ -10,8 +10,8 @@ const echoCelebrate = {
       questions: Joi.array()
         .items(
           Joi.object({
-            lower: Joi.number().required(),
-            higher: Joi.number().required(),
+            lower: Joi.number(),
+            higher: Joi.number(),
           })
         )
         .required(),
@@ -70,6 +70,7 @@ const sum = async (req: Request, res: Response) => {
       p /= d
       q /= d
     }
+    if (p == 0) q = 1
     result.push({ p, q })
   }
   return res.status(200).json(result)
