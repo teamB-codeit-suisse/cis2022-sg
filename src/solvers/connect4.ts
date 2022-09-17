@@ -1,7 +1,7 @@
 import axios from 'axios'
 import https from 'https'
 
-export function connect4Solution(battleId: string) {
+export function connect4Solution(battleId: string): void {
   const src = `https://cis2022-arena.herokuapp.com/connect4/play/${battleId}`
   const evtSrc = `https://cis2022-arena.herokuapp.com/connect4/start/${battleId}`
 
@@ -33,8 +33,8 @@ export function connect4Solution(battleId: string) {
   let myToken = ''
 
   const postMove = (column: string) => {
-    setTimeout(() => {
-      axios
+    setTimeout(async () => {
+      await axios
         .post(src, {
           action: 'putToken',
           column,
@@ -57,9 +57,9 @@ export function connect4Solution(battleId: string) {
   }
 
   type Message = {
-    youAre: string
+    youAre?: string
     id: string
-    player: string
+    player?: string
     action: string
     column: string
     winner: string
@@ -68,16 +68,17 @@ export function connect4Solution(battleId: string) {
     res.on('data', (eventdata) => {
       const text = new TextDecoder('utf-8').decode(eventdata)
       const data = JSON.parse(text.replace('data: ', '')) as Message
-      if (data.hasOwnProperty('youAre')) {
+      const { youAre, player } = data
+      if (youAre) {
         // initial event
-        myToken = data['youAre']
+        myToken = youAre
         if (myToken === '🔴') {
           addMoveToBoard('D', 1)
           postMove('D')
         }
-      } else if (data.hasOwnProperty('player')) {
+      } else if (player) {
         if (data.action === 'putToken') {
-          if (data.player !== myToken) {
+          if (player !== myToken) {
             const valid = addMoveToBoard(data.column, -1)
             if (!valid) flipTable()
             else {
@@ -85,6 +86,12 @@ export function connect4Solution(battleId: string) {
                 const column = columns[Math.floor(Math.random() * 7)]
                 if (!addMoveToBoard(column, 1)) continue
                 postMove(column)
+              }
+              for (const col of columns) {
+                if (addMoveToBoard(col, 1)) {
+                  postMove(col)
+                  break
+                }
               }
             }
           } else {
