@@ -12,11 +12,11 @@ dotenv.config()
 const app: Express = express()
 const port = process.env.PORT || 8000
 
-app.use(bodyParser.json())
-
 if (app.get('env') !== 'test') {
   morganBody(app, { noColors: process.env.NODE_ENV === 'production' })
 }
+
+app.use(bodyParser.json())
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   if (req.url === '/ping' || req.url === '/') {
