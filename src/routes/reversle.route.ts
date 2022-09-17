@@ -1,5 +1,4 @@
 import { Request, Response, Router } from 'express'
-import { celebrate, Joi, Segments } from 'celebrate'
 import { asyncErrorWrapper } from '../utils/errors'
 
 const router = Router()
