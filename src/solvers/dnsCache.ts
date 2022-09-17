@@ -23,7 +23,7 @@ export function query(cacheSize: number, log: string[]) {
     if (lookup.get(log[i]) != undefined) {
       let index1 = compression.get(log[i])!
       if (count.get(index1)) {
-        output.push({status: "cache hit", ipaddress: lookup.get(log[i])})
+        output.push({status: "cache hit", ipAddress: lookup.get(log[i])})
         count.set(index1, count.get(index1)!+1);
       } else if (Object.keys(count).length < cacheSize) {
         output.push({status: "cache miss", ipAddress: lookup.get(log[i])})
