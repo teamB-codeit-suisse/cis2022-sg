@@ -92,8 +92,8 @@ export function rubiksSolution(ops:String,
           var u1 = [...u[2]]
           var d1 = [...d[0]]
           var l1 =  l.map(function(value,_) { return value[2]; });
-          var r1 =  l.map(function(value,_) { return value[0]; });
-          rotateSide(u1, l1, d1, r1, inverse)
+          var r1 =  r.map(function(value,_) { return value[0]; });
+          rotateSide(u1, r1, d1, l1, inverse)
           u[2] = u1
           for (let i = 0; i < l1.length; i++) l[i][2]=l1[i]
           d[0] = d1
@@ -116,8 +116,8 @@ export function rubiksSolution(ops:String,
           var u1 = [...u[0]]
           var d1 = [...d[2]]
           var l1 =  l.map(function(value,_) { return value[0]; });
-          var r1 =  l.map(function(value,_) { return value[2]; });
-          rotateSide(u1, r1, d1, l1, inverse)
+          var r1 =  r.map(function(value,_) { return value[2]; });
+          rotateSide(u1, l1, d1, r1, inverse)
           u[0] = u1
           for (let i = 0; i < l1.length; i++) l[i][0]=l1[i]
           d[2] = d1
