@@ -30,7 +30,7 @@ const stonksHandler = async (req: Request, res: Response) => {
   const tests: stonksBody[] = req.body
   const result: string[][] = []
   for (let i = 0; i < tests.length; i++) {
-    const timeline = tests[i].timeline
+    const { timeline, energy } = tests[i]
     const b = new Set()
     for (const element of Object.values(timeline)) {
       for (const stonks of Object.keys(element)) {
@@ -38,6 +38,7 @@ const stonksHandler = async (req: Request, res: Response) => {
       }
     }
     result.push([
+      energy.toString(),
       Object.keys(timeline).length.toString(),
       b.size.toString(),
       Object.keys(timeline).join('|'),
