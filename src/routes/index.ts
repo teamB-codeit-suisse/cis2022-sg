@@ -5,6 +5,7 @@ import tickerStreamRouter from './tickerStream.route'
 import cryptocollapzRouter from './cryptocollapz.route'
 import calendarDaysRouter from './calendarDays.route'
 import rubiksRouter from './rubiks.route'
+import reversleRouter from './reversle.route'
 import swissStigRouter from './swissStig.route'
 import travellingSuisseRobot from './travellingSuisseRobot.route'
 import magicCauldron from './magicCauldrons.route'
@@ -22,6 +23,7 @@ router.use(calendarDaysRouter)
 router.use(rubiksRouter)
 router.use(swissStigRouter)
 router.use(travellingSuisseRobot)
+router.use(reversleRouter)
 router.use(magicCauldron)
 router.use(quordleKeyboard)
 router.use(dnsCache)
