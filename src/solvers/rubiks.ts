@@ -122,7 +122,7 @@ export function rubiksSolution(
       const temp = u[2]
       if (inverse) {
         u[2] = getCol(r, 0)
-        r = setCol(r, 0, d[0])
+        r = setCol(r, 0, d[0].reverse())
         d[0] = getCol(l, 2)
         l = setCol(l, 2, temp.reverse())
       } else {
@@ -135,7 +135,7 @@ export function rubiksSolution(
       b = rotateFace(b, inverse)
       const temp = u[0]
       if (inverse) {
-        u[0] = getCol(l, 0)
+        u[0] = getCol(l, 0).reverse()
         l = setCol(l, 0, d[2])
         d[2] = getCol(r, 2).reverse()
         r = setCol(r, 2, temp)
