@@ -28,9 +28,12 @@ function simulate(
   return Math.min(cap(row, col), amounts[col])
 }
 
+const capacity1 = () => 100
+const capacity2 = (_: number, c: number) => (c % 2 === 0 ? 150 : 100)
+
 export function magicCauldronPart1(input: Part1Input) {
   const { flow_rate, time, row_number, col_number } = input
-  const ans = simulate(flow_rate * time, row_number, col_number, () => 100)
+  const ans = simulate(flow_rate * time, row_number, col_number, capacity1)
   return Math.round(ans * 100) / 100
 }
 
@@ -41,21 +44,19 @@ export function magicCauldronPart2(input: Part2Input) {
     ans = -1
   while (lo <= hi) {
     const mid = Math.floor((lo + hi) / 2)
-    const value = simulate(flow_rate * mid, row_number, col_number, () => 100)
+    const value = simulate(flow_rate * mid, row_number, col_number, capacity1)
     if (value <= amount_of_soup) {
       lo = mid + 1
       ans = mid
     } else hi = mid - 1
   }
-  if (simulate(flow_rate * (ans + 0.5), row_number, col_number, () => 100) <= amount_of_soup) ans++
+  if (simulate(flow_rate * (ans + 0.5), row_number, col_number, capacity1) <= amount_of_soup) ans++
   return ans
 }
 
 export function magicCauldronPart3(input: Part3Input) {
   const { flow_rate, time, row_number, col_number } = input
-  const ans = simulate(flow_rate * time, row_number, col_number, (_, c) =>
-    c % 2 === 0 ? 150 : 100
-  )
+  const ans = simulate(flow_rate * time, row_number, col_number, capacity2)
   return Math.round(ans * 100) / 100
 }
 
@@ -66,19 +67,12 @@ export function magicCauldronPart4(input: Part4Input) {
     ans = -1
   while (lo <= hi) {
     const mid = Math.floor((lo + hi) / 2)
-    const value = simulate(flow_rate * mid, row_number, col_number, (_, c) =>
-      c % 2 === 0 ? 150 : 100
-    )
+    const value = simulate(flow_rate * mid, row_number, col_number, capacity2)
     if (value <= amount_of_soup) {
       lo = mid + 1
       ans = mid
     } else hi = mid - 1
   }
-  if (
-    simulate(flow_rate * (ans + 0.5), row_number, col_number, (_, c) =>
-      c % 2 === 0 ? 150 : 100
-    ) <= amount_of_soup
-  )
-    ans++
+  if (simulate(flow_rate * (ans + 0.5), row_number, col_number, capacity2) <= amount_of_soup) ans++
   return ans
 }
