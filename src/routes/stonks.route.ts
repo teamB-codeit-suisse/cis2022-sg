@@ -29,10 +29,12 @@ type stonksBody = {
 const stonksHandler = async (req: Request, res: Response) => {
   const tests: stonksBody[] = req.body
   let a = 0
+  const result: string[][] = []
   for (let i = 0; i < tests.length; i++) {
     a = Math.max(a, Object.keys(tests[i]).length)
+    result.push([a.toString()])
   }
-  return res.status(200).json({ a })
+  return res.status(200).json(result)
 }
 
 router.post('/stonks', celebrate(echoCelebrate), asyncErrorWrapper(stonksHandler))
