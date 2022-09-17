@@ -6,11 +6,13 @@ import { asyncErrorWrapper } from '../utils/errors'
 const router = Router()
 
 const echoCelebrate = {
-  [Segments.BODY]: Joi.object({
-    energy: Joi.number().required(),
-    capital: Joi.number().required(),
-    timeline: Joi.object().required(),
-  }),
+  [Segments.BODY]: Joi.array().items(
+    Joi.object({
+      energy: Joi.number().required(),
+      capital: Joi.number().required(),
+      timeline: Joi.object().required(),
+    })
+  ),
 }
 
 type stocks = {
