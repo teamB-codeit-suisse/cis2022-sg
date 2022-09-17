@@ -66,13 +66,13 @@ export function rubiksSolution(
       const temp = f[0]
       if (inverse) {
         f[0] = l[0]
-        l[0] = b[0].reverse()
-        b[0] = r[0].reverse()
+        l[0] = b[0]
+        b[0] = r[0]
         r[0] = temp
       } else {
         f[0] = r[0]
-        r[0] = b[0].reverse()
-        b[0] = l[0].reverse()
+        r[0] = b[0]
+        b[0] = l[0]
         l[0] = temp
       }
     } else if (curOps == 'L') {
@@ -108,13 +108,13 @@ export function rubiksSolution(
       const temp = f[2]
       if (!inverse) {
         f[2] = l[2]
-        l[2] = b[2].reverse()
-        b[2] = r[2].reverse()
+        l[2] = b[2]
+        b[2] = r[2]
         r[2] = temp
       } else {
         f[2] = r[2]
-        r[2] = b[2].reverse()
-        b[2] = l[2].reverse()
+        r[2] = b[2]
+        b[2] = l[2]
         l[2] = temp
       }
     } else if (curOps == 'F') {
