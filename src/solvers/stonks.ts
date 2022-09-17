@@ -27,7 +27,7 @@ function solve(
   let maxCapital = 0
   let maxIndex = 0
   for (let i = 0; i <= capital; i++) {
-    if (dp[i] + i > maxCapital) {
+    if (dp[i] + i >= maxCapital) {
       maxCapital = dp[i] + i
       maxIndex = i
     }
