@@ -3,12 +3,13 @@ import EventSource from 'eventsource'
 
 export function connect4Solution(battleId: string) {
   const src = `https://cis2022-arena.herokuapp.com/connect4/start/${battleId}`
+  const playSrc = `https://cis2022-arena.herokuapp.com/connect4/play/${battleId}`
   const evtSource = new EventSource(src)
 
   let myToken = ''
 
   const postMove = (column: string) => {
-    axios.post(src, {
+    axios.post(playSrc, {
       action: 'putToken',
       column,
     })
