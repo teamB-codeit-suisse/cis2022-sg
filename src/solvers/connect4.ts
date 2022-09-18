@@ -64,8 +64,6 @@ async function connect4Solution(battleId: string): Promise<void> {
                 if (timeout !== undefined) clearTimeout(timeout)
                 flipTable()
               }
-              req.end()
-              resolve()
             }
           } else if (data.hasOwnProperty('winner')) {
             // end of game
@@ -74,6 +72,8 @@ async function connect4Solution(battleId: string): Promise<void> {
               if (timeout !== undefined) clearTimeout(timeout)
               flipTable()
             }
+            req.end()
+            resolve()
           } else {
             // ignore other events
           }
