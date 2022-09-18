@@ -67,7 +67,7 @@ async function connect4Solution(battleId: string): Promise<void> {
               req.end()
               resolve()
             }
-          } else if (data.hasOwnProperty('winner') {
+          } else if (data.hasOwnProperty('winner')) {
             // end of game
             console.log(data)
             if (data.winner !== 'draw' && data.winner !== myToken) {
