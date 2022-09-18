@@ -8,7 +8,7 @@ async function connect4Solution(battleId: string): Promise<void> {
 
   const columns = 'ABCDEFG'
   const game = new (Connect4.Connect4AI as any)()
-  game.recursiveDepthLimit = 5
+  game.recursiveDepthLimit = 3
 
   let myToken = ''
 
@@ -67,13 +67,15 @@ async function connect4Solution(battleId: string): Promise<void> {
               req.end()
               resolve()
             }
-          } else {
+          } else if (data.hasOwnProperty('winner') {
             // end of game
             console.log(data)
             if (data.winner !== 'draw' && data.winner !== myToken) {
               if (timeout !== undefined) clearTimeout(timeout)
               flipTable()
             }
+          } else {
+            // ignore other events
           }
         } catch (err) {
           console.error(err)
