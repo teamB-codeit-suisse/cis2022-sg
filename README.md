@@ -1,6 +1,6 @@
 # cis2022-sg
 
-- This server used by team B (SG 1st runner up) for the 2022 Credit Suisse Coding Challenge.
+Server used by team B (SG 1st runner up) for the 2022 Credit Suisse Coding Challenge.
 
 ## Tech Stack
 - Typescript with express framework
