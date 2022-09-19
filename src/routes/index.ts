@@ -13,6 +13,7 @@ import quordleKeyboard from './quordleKeyboard.route'
 import dnsCache from './dnsCache.route'
 import socialDistancing from './socialDistancing.route'
 import stonksRouter from './stonks.route'
+import connect4 from './connect4.route'
 
 const router = Router()
 router.use('/', echoRouter)
@@ -29,5 +30,6 @@ router.use(quordleKeyboard)
 router.use(dnsCache)
 router.use(socialDistancing)
 router.use(stonksRouter)
+router.use(connect4)
 
 export default router
