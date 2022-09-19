@@ -30,14 +30,14 @@ async function connect4Solution(battleId: string): Promise<void> {
         const text = new TextDecoder('utf-8').decode(eventdata)
         try {
           const data = JSON.parse(text.replace('data: ', ''))
-          if (data.hasOwnProperty('youAre')) {
+          if (data.youAre) {
             // initial event
             myToken = data['youAre']
             if (myToken === '🔴') {
               game.playAI('hard')
               postMove(columns[game.plays[game.plays.length - 1]])
             }
-          } else if (data.hasOwnProperty('action')) {
+          } else if (data.action) {
             if (data.action === 'putToken') {
               if (data.player !== myToken) {
                 const valid = game.canPlay(columns.indexOf(data.column))
@@ -65,7 +65,7 @@ async function connect4Solution(battleId: string): Promise<void> {
                 flipTable()
               }
             }
-          } else if (data.hasOwnProperty('winner')) {
+          } else if (data.winner) {
             // end of game
             console.log(data)
             if (data.winner !== 'draw' && data.winner !== myToken) {

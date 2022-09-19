@@ -1,7 +1,16 @@
 const A_CHAR = 'A'.charCodeAt(0)
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-export function quordleKeyboardSolution(answers: string[], attempts: string[], numbers: number[]) {
+type response = {
+  part1: string
+  part2: string
+}
+
+export function quordleKeyboardSolution(
+  answers: string[],
+  attempts: string[],
+  numbers: number[]
+): response {
   const frequencyInAnswer = Array(26).fill(0)
   for (const answer of answers) {
     for (const c of answer) {
@@ -12,7 +21,7 @@ export function quordleKeyboardSolution(answers: string[], attempts: string[], n
   const solved = Array(4).fill(false)
 
   const part1Array = Array(26).fill(0)
-  for (let [index, attempt] of attempts.entries()) {
+  for (const [index, attempt] of attempts.entries()) {
     for (let i = 0; i < 4; i++) {
       if (solved[i]) continue
       if (attempt !== answers[i]) continue

@@ -6,11 +6,13 @@ import { getStonks, Testcase } from '../solvers/stonks'
 const router = Router()
 
 const stonksCelebrate = {
-  [Segments.BODY]: Joi.array().items(Joi.object({
-    energy: Joi.number(),
-    capital: Joi.number(),
-    timeline: Joi.object()
-  }))
+  [Segments.BODY]: Joi.array().items(
+    Joi.object({
+      energy: Joi.number(),
+      capital: Joi.number(),
+      timeline: Joi.object(),
+    })
+  ),
 }
 
 const stonks = async (req: Request, res: Response) => {

@@ -45,7 +45,7 @@ export function calendarDaysSolution(numbers: number[]): {
   const monthDays = days.map((day) => getMonthDay(year, day))
 
   // an array of size [12][7] representing if a given [month][day] was given in numbers
-  const monthDayPresent = []
+  const monthDayPresent: boolean[][] = []
   for (let i = 0; i < 12; i++) monthDayPresent.push(Array(7).fill(false))
 
   for (const monthDay of monthDays) {

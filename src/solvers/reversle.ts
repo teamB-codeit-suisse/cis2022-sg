@@ -18,8 +18,8 @@ export function reverslePart2Solution(
   equationHistory: string[][],
   resultHistory: string[][],
   _attemptsLeft: number
-) {
-  let constraints: Set<string>[] = Array(equationLength)
+): string[] {
+  const constraints: Set<string>[] = Array(equationLength)
   constraints[0] = new Set(CONSTRAINTS.digits.slice())
   constraints[1] = new Set(CONSTRAINTS.digits.slice())
   for (let i = 2; i < equationLength; i++)
@@ -33,7 +33,7 @@ export function reverslePart2Solution(
 
     const freq: Record<string, number> = {}
     for (let j = 0; j < equationLength; j++) {
-      if (!freq.hasOwnProperty(equation[j])) freq[equation[j]] = 0
+      if (!freq[equation[j]]) freq[equation[j]] = 0
       freq[equation[j]] += result[j] === '2' ? 2 : result[j] === '1' ? 1 : 0
       if (result[j] === '2') {
         constraints[j] = new Set([equation[j]])

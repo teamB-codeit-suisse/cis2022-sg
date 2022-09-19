@@ -31,13 +31,13 @@ function simulate(
 const capacity1 = () => 100
 const capacity2 = (_: number, c: number) => (c % 2 === 0 ? 150 : 100)
 
-export function magicCauldronPart1(input: Part1Input) {
+export function magicCauldronPart1(input: Part1Input): number {
   const { flow_rate, time, row_number, col_number } = input
   const ans = simulate(flow_rate * time, row_number, col_number, capacity1)
   return Math.round(ans * 100) / 100
 }
 
-export function magicCauldronPart2(input: Part2Input) {
+export function magicCauldronPart2(input: Part2Input): number {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
   let lo = 0,
     hi = 999,
@@ -54,13 +54,13 @@ export function magicCauldronPart2(input: Part2Input) {
   return ans
 }
 
-export function magicCauldronPart3(input: Part3Input) {
+export function magicCauldronPart3(input: Part3Input): number {
   const { flow_rate, time, row_number, col_number } = input
   const ans = simulate(flow_rate * time, row_number, col_number, capacity2)
   return Math.round(ans * 100) / 100
 }
 
-export function magicCauldronPart4(input: Part4Input) {
+export function magicCauldronPart4(input: Part4Input): number {
   const { flow_rate, amount_of_soup, row_number, col_number } = input
   let lo = 0,
     hi = 999,

@@ -51,9 +51,15 @@ type MagicCauldronBody = {
   part3: Part3Input
   part4: Part4Input
 }
+type MagicCauldronResult = {
+  part1: number
+  part2: number
+  part3: number
+  part4: number
+}
 
 const magicCauldron = async (req: Request, res: Response) => {
-  const ans = []
+  const ans: MagicCauldronResult[] = []
   for (const input of req.body) {
     const { part1, part2, part3, part4 }: MagicCauldronBody = input
     const part1Solution = magicCauldronPart1(part1)

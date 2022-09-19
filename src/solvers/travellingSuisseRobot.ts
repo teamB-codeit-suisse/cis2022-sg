@@ -53,7 +53,7 @@ export function travellingSuisseRobotSolution(mapString: string): string {
     for (let x = 0; x < map[y].length; x++) {
       const letter = map[y][x]
       if (DESIRED_STRING.includes(letter)) {
-        if (!letterPositions.hasOwnProperty(letter)) letterPositions[letter] = []
+        if (!letterPositions[letter]) letterPositions[letter] = []
         letterPositions[letter].push({ x, y, used: false })
       } else if (ROBOT_STRING === letter) {
         initialRobotPosition.x = x

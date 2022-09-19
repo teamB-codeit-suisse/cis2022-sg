@@ -59,7 +59,6 @@ export function rubiksSolution(
       if (ops.at(index + 1) === 'i') {
         inverse = true
       }
-
     }
     const curOps = ops.at(index)
     if (curOps == 'U') {

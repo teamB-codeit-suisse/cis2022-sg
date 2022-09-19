@@ -6,11 +6,7 @@ import { cryptocollapzSolution } from '../solvers/cryptocollapz'
 const router = Router()
 
 const cryptocollapzCelebrate = {
-  [Segments.BODY]: Joi.array().items(
-    Joi.array().items(
-      Joi.number()
-    ).required(),
-  ).required(),
+  [Segments.BODY]: Joi.array().items(Joi.array().items(Joi.number()).required()).required(),
 }
 
 const cryptocollapz = async (req: Request, res: Response) => {
@@ -19,10 +15,6 @@ const cryptocollapz = async (req: Request, res: Response) => {
   return res.status(200).json(output)
 }
 
-router.post(
-  '/cryptocollapz',
-  celebrate(cryptocollapzCelebrate),
-  asyncErrorWrapper(cryptocollapz)
-)
+router.post('/cryptocollapz', celebrate(cryptocollapzCelebrate), asyncErrorWrapper(cryptocollapz))
 
 export default router
