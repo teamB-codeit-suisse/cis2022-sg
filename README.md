@@ -1,5 +1,13 @@
 # cis2022-sg
 
+- This server used by team B (SG 1st runner up) for the 2022 Credit Suisse Coding Challenge.
+
+## Tech Stack
+- Typescript with express framework
+- Eslint and prettier for code styling
+- (Tests) Jest framework used for locally E2E test
+- (CI/CD) Heroku pipeline to automatically deploy PRs and Commits to `master` branch
+
 ## Getting Started
 
 ### Dependencies
